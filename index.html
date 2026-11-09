@@ -23,7 +23,7 @@
           <li><a href="#funktionsweise"><span lang="de">So funktioniert's</span><span lang="en">How it works</span></a></li>
           <li><a href="#zielgruppen"><span lang="de">Für wen</span><span lang="en">Who it's for</span></a></li>
           <li><a href="#preise"><span lang="de">Preise</span><span lang="en">Pricing</span></a></li>
-          <li><a href="#sicherheit"><span lang="de">Sicherheit</span><span lang="en">Security</span></a></li>
+          <li><a href="#ein-auszahlung"><span lang="de">CHF und KYC</span><span lang="en">CHF and KYC</span></a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
       </nav>
@@ -33,6 +33,7 @@
           <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
           <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
         </div>
+        <button type="button" class="btn btn-secondary btn-small header-login" data-open-login><span lang="de">Anmelden</span><span lang="en">Sign in</span></button>
         <a class="btn btn-primary btn-small header-cta" href="#kontakt"><span lang="de">Demo anfragen</span><span lang="en">Request a demo</span></a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
           <span class="nav-toggle-bars" aria-hidden="true"></span>
@@ -58,7 +59,7 @@
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#kontakt"><span lang="de">Demo anfragen</span><span lang="en">Request a demo</span></a>
-            <a class="btn btn-secondary" href="#funktionsweise"><span lang="de">So funktioniert's</span><span lang="en">How it works</span></a>
+            <button type="button" class="btn btn-secondary" data-open-login><span lang="de">Plattform ausprobieren</span><span lang="en">Try the platform</span></button>
           </div>
         </div>
 
@@ -152,42 +153,253 @@
       </div>
     </section>
 
-    <!-- FUNKTIONSWEISE -->
-    <section class="section section-light" id="funktionsweise" aria-labelledby="funktionsweise-title">
+    <!-- PERSONAS -->
+    <section class="section section-light" id="personas" aria-labelledby="personas-title">
+      <div class="container">
+        <h2 id="personas-title" class="section-title">
+          <span lang="de">Für wen wir billDsmart bauen</span>
+          <span lang="en">Who we are building billDsmart for</span>
+        </h2>
+        <div class="personas">
+          <article class="persona">
+            <header class="persona-head">
+              <div class="persona-avatar" aria-hidden="true">SB</div>
+              <div>
+                <h3>Sandro Beispiel</h3>
+                <p class="persona-role"><span lang="de">Inhaber Malerei Beispiel GmbH, Root LU, 6 Mitarbeitende</span><span lang="en">Owner of Malerei Beispiel GmbH, Root LU, 6 employees</span></p>
+              </div>
+            </header>
+            <p class="persona-quote"><span lang="de">«Ich will streichen, nicht Rechnungen nachrennen. Und ich will Franken auf meinem Konto, keine Wallet.»</span><span lang="en">“I want to paint, not chase invoices. And I want Swiss francs in my account, not a wallet.”</span></p>
+            <div class="pg">
+              <div class="pg-col pains">
+                <h4><span lang="de">Pains</span><span lang="en">Pains</span></h4>
+                <ul>
+                  <li><span lang="de">Finanziert Material und Löhne wochenlang vor</span><span lang="en">Pre-finances materials and wages for weeks</span></li>
+                  <li><span lang="de">Geht ein Generalunternehmer Konkurs, ist das Geld weg</span><span lang="en">If a general contractor goes bankrupt, the money is gone</span></li>
+                  <li><span lang="de">Kaum Verhandlungsmacht gegenüber grossen Auftraggebern</span><span lang="en">Little bargaining power towards large clients</span></li>
+                  <li><span lang="de">Abends Mahnungen schreiben und E-Mails suchen</span><span lang="en">Writing reminders and searching emails in the evening</span></li>
+                </ul>
+              </div>
+              <div class="pg-col gains">
+                <h4><span lang="de">Gains</span><span lang="en">Gains</span></h4>
+                <ul>
+                  <li><span lang="de">Sieht vor Arbeitsbeginn, dass das Geld gesichert ist</span><span lang="en">Sees the money is secured before work starts</span></li>
+                  <li><span lang="de">Teilzahlung nach jedem abgenommenen Meilenstein</span><span lang="en">Partial payment after every approved milestone</span></li>
+                  <li><span lang="de">Franken direkt aufs Firmenkonto, ohne Krypto-Wissen</span><span lang="en">Francs straight to the company account, no crypto knowledge needed</span></li>
+                  <li><span lang="de">Pläne, Rechnungen und Fotos an einem Ort</span><span lang="en">Plans, invoices and photos in one place</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="persona">
+            <header class="persona-head">
+              <div class="persona-avatar persona-avatar-client" aria-hidden="true">NM</div>
+              <div>
+                <h3>Nina Muster</h3>
+                <p class="persona-role"><span lang="de">Private Bauherrin, saniert ein Mehrfamilienhaus in Root</span><span lang="en">Private client, renovating a multi-family building in Root</span></p>
+              </div>
+            </header>
+            <p class="persona-quote"><span lang="de">«Ich zahle gern, aber erst, wenn die Arbeit gemacht ist, und ohne Angst vor einem Pfandrecht.»</span><span lang="en">“I'm happy to pay, but only once the work is done, and without worrying about a lien.”</span></p>
+            <div class="pg">
+              <div class="pg-col pains">
+                <h4>Pains</h4>
+                <ul>
+                  <li><span lang="de">Vorauszahlungen ohne Sicherheit</span><span lang="en">Advance payments without any security</span></li>
+                  <li><span lang="de">Risiko eines Bauhandwerkerpfandrechts</span><span lang="en">Risk of a builders' lien</span></li>
+                  <li><span lang="de">Kein Überblick über Fortschritt und offene Zahlungen</span><span lang="en">No overview of progress and open payments</span></li>
+                </ul>
+              </div>
+              <div class="pg-col gains">
+                <h4>Gains</h4>
+                <ul>
+                  <li><span lang="de">Zahlt nur für abgenommene Arbeit</span><span lang="en">Only pays for accepted work</span></li>
+                  <li><span lang="de">Sieht Budget, Meilensteine und Dokumente jederzeit</span><span lang="en">Sees budget, milestones and documents at any time</span></li>
+                  <li><span lang="de">Klarer Weg bei Uneinigkeit, mit Fachleuten aus der Nähe</span><span lang="en">A clear path if you disagree, with experts nearby</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p class="persona-note">
+          <span lang="de">Beide Personas können Sie auf der Plattform selbst ausprobieren.</span>
+          <span lang="en">You can try out both personas on the platform yourself.</span>
+          <button type="button" class="link-btn link-btn-strong" data-open-login><span lang="de">Zur Anmeldung</span><span lang="en">Go to sign-in</span></button>
+        </p>
+      </div>
+    </section>
+
+    <!-- ABLAUF (Escrow-Lifecycle aus Sicht der Nutzer) -->
+    <section class="section" id="funktionsweise" aria-labelledby="funktionsweise-title">
       <div class="container">
         <h2 id="funktionsweise-title" class="section-title">
-          <span lang="de">So läuft ein Projekt mit billDsmart</span>
-          <span lang="en">How a project runs on billDsmart</span>
+          <span lang="de">So läuft ein Auftrag ab</span>
+          <span lang="en">How a job works</span>
         </h2>
-        <ol class="steps">
-          <li class="step">
-            <h3><span lang="de">Vertrag aufsetzen</span><span lang="en">Set up the contract</span></h3>
-            <p><span lang="de">Bauherrschaft und Unternehmer legen Meilensteine, Beträge und Freigabebedingungen gemeinsam fest, genau so, wie es zum Projekt passt.</span><span lang="en">Client and contractor agree on milestones, amounts and release conditions together, tailored to the project.</span></p>
+        <div class="lifecycle">
+          <ol class="lifecycle-steps" id="lifecycle-steps">
+            <li><button type="button" class="lc-step" data-step="1" aria-pressed="true">
+              <strong><span lang="de">Auftrag</span><span lang="en">Order</span></strong>
+              <span><span lang="de">Bauherrschaft und Unternehmer vereinbaren Meilensteine, Beträge und Abnahmekriterien und unterschreiben digital.</span><span lang="en">Client and contractor agree on milestones, amounts and acceptance criteria and sign digitally.</span></span>
+            </button></li>
+            <li><button type="button" class="lc-step" data-step="2" aria-pressed="false">
+              <strong><span lang="de">Einzahlung</span><span lang="en">Deposit</span></strong>
+              <span><span lang="de">Die Bauherrschaft überweist das Budget in Franken. Ab jetzt ist es gesichert, und beide sehen das.</span><span lang="en">The client transfers the budget in Swiss francs. From now on it is secured, and both can see it.</span></span>
+            </button></li>
+            <li><button type="button" class="lc-step" data-step="3" aria-pressed="false">
+              <strong><span lang="de">Arbeit</span><span lang="en">Work</span></strong>
+              <span><span lang="de">Der Unternehmer arbeitet die Aufgaben ab. Fragen, Pläne und Fotos laufen über den Projektchat.</span><span lang="en">The contractor works through the tasks. Questions, plans and photos go through the project chat.</span></span>
+            </button></li>
+            <li><button type="button" class="lc-step" data-step="4" aria-pressed="false">
+              <strong><span lang="de">Abnahme</span><span lang="en">Acceptance</span></strong>
+              <span><span lang="de">Der Unternehmer meldet einen Meilenstein als fertig, die Bauherrschaft prüft ihn vor Ort.</span><span lang="en">The contractor marks a milestone as done and the client checks it on site.</span></span>
+            </button></li>
+            <li><button type="button" class="lc-step" data-step="5" aria-pressed="false">
+              <strong><span lang="de">Freigabe</span><span lang="en">Release</span></strong>
+              <span><span lang="de">Nach der Freigabe kommt der Teilbetrag in Franken auf das Firmenkonto. Bei Uneinigkeit bleibt er gesichert.</span><span lang="en">After approval, the partial amount arrives in Swiss francs in the company account. If there is a disagreement, it stays secured.</span></span>
+            </button></li>
+          </ol>
+
+          <div class="phone" aria-live="polite">
+            <div class="phone-screen">
+              <div class="phone-bar"><span>Malerarbeiten Musterweg 5</span></div>
+              <div class="phone-view" data-view="1">
+                <p class="pv-label"><span lang="de">Vertrag BDS-2026-0147</span><span lang="en">Contract BDS-2026-0147</span></p>
+                <ul class="pv-list">
+                  <li><span>1 <span lang="de">Vorbereitung</span><span lang="en">Preparation</span></span><b>6’000</b></li>
+                  <li><span>2 <span lang="de">Fassade</span><span lang="en">Façade</span></span><b>18’000</b></li>
+                  <li><span>3 <span lang="de">Treppenhaus</span><span lang="en">Stairwell</span></span><b>9’000</b></li>
+                  <li><span>4 <span lang="de">Wohnungen</span><span lang="en">Apartments</span></span><b>12’000</b></li>
+                  <li><span>5 <span lang="de">Schlussabnahme</span><span lang="en">Final acceptance</span></span><b>3’000</b></li>
+                </ul>
+                <p class="pv-total"><span lang="de">Total</span><span lang="en">Total</span> <b>CHF 48’000</b></p>
+                <span class="pv-btn"><span lang="de">Vertrag unterschreiben</span><span lang="en">Sign contract</span></span>
+              </div>
+              <div class="phone-view" data-view="2" hidden>
+                <p class="pv-label"><span lang="de">Budget einzahlen</span><span lang="en">Deposit budget</span></p>
+                <p class="pv-big">CHF 48’144</p>
+                <p class="pv-small"><span lang="de">inkl. Gebühr 0,3 % (CHF 144)</span><span lang="en">incl. 0.3% fee (CHF 144)</span></p>
+                <div class="pv-box"><span lang="de">Empfänger: Partnerbank<br>Referenz: BDS-2026-0147</span><span lang="en">Payee: partner bank<br>Reference: BDS-2026-0147</span></div>
+                <p class="pv-ok"><span lang="de">Geld gesichert</span><span lang="en">Money secured</span></p>
+              </div>
+              <div class="phone-view" data-view="3" hidden>
+                <p class="pv-label"><span lang="de">Meilenstein 2: Fassade</span><span lang="en">Milestone 2: Façade</span></p>
+                <ul class="pv-tasks">
+                  <li class="done"><span lang="de">Fassade waschen</span><span lang="en">Wash façade</span></li>
+                  <li class="done"><span lang="de">Risse ausbessern</span><span lang="en">Repair cracks</span></li>
+                  <li><span lang="de">Grundierung</span><span lang="en">Primer</span></li>
+                  <li><span lang="de">Zwei Anstriche</span><span lang="en">Two coats</span></li>
+                </ul>
+                <div class="pv-chat"><span lang="de">Nina: Farbton wie im Farbkonzept?</span><span lang="en">Nina: Colour as in the colour concept?</span></div>
+                <div class="pv-chat pv-chat-me"><span lang="de">Sandro: Ja, NCS S 1005-Y20R.</span><span lang="en">Sandro: Yes, NCS S 1005-Y20R.</span></div>
+              </div>
+              <div class="phone-view" data-view="4" hidden>
+                <p class="pv-label"><span lang="de">Fassade fertig gemeldet</span><span lang="en">Façade marked as done</span></p>
+                <div class="pv-photo" aria-hidden="true"></div>
+                <p class="pv-small"><span lang="de">Abnahmekriterium: zwei Anstriche, Farbton gemäss Konzept</span><span lang="en">Acceptance criterion: two coats, colour as per concept</span></p>
+                <div class="pv-actions"><span class="pv-btn"><span lang="de">Freigeben</span><span lang="en">Approve</span></span><span class="pv-btn pv-btn-ghost"><span lang="de">Beanstanden</span><span lang="en">Dispute</span></span></div>
+              </div>
+              <div class="phone-view" data-view="5" hidden>
+                <div class="pv-check" aria-hidden="true"></div>
+                <p class="pv-big">CHF 18’000</p>
+                <p class="pv-small"><span lang="de">auf Ihr Konto CH00 … 0002 überwiesen</span><span lang="en">transferred to your account CH00 … 0002</span></p>
+                <p class="pv-label"><span lang="de">Noch gesichert: CHF 24’000</span><span lang="en">Still secured: CHF 24,000</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITEKTUR (was im Hintergrund passiert) -->
+    <section class="section section-light" id="architektur" aria-labelledby="architektur-title">
+      <div class="container">
+        <h2 id="architektur-title" class="section-title">
+          <span lang="de">Was im Hintergrund passiert</span>
+          <span lang="en">What happens behind the scenes</span>
+        </h2>
+        <div class="arch" aria-label="Architektur">
+          <div class="arch-platform">
+            <strong><span lang="de">billDsmart Plattform und App</span><span lang="en">billDsmart platform and app</span></strong>
+            <span><span lang="de">Verträge, Meilensteine, Chat, Dokumente. Löst Zahlungsaufträge aus, verwahrt aber nie Geld.</span><span lang="en">Contracts, milestones, chat, documents. Triggers payment instructions but never holds money.</span></span>
+          </div>
+          <div class="arch-api"><span lang="de">gesicherte Schnittstelle (API)</span><span lang="en">secured interface (API)</span></div>
+          <ol class="arch-flow">
+            <li class="arch-node">
+              <strong><span lang="de">Bauherrschaft</span><span lang="en">Client</span></strong>
+              <span><span lang="de">überweist CHF</span><span lang="en">transfers CHF</span></span>
+            </li>
+            <li class="arch-node">
+              <strong><span lang="de">Partnerbank</span><span lang="en">Partner bank</span></strong>
+              <span><span lang="de">CHF-Konto, Ein- und Auszahlungen</span><span lang="en">CHF account, deposits and payouts</span></span>
+            </li>
+            <li class="arch-node">
+              <strong><span lang="de">Umtauschpartner</span><span lang="en">Exchange partner</span></strong>
+              <span><span lang="de">tauscht CHF 1:1 in CHF-Stablecoin und zurück, verwahrt die Token</span><span lang="en">swaps CHF 1:1 into CHF stablecoin and back, holds the tokens in custody</span></span>
+            </li>
+            <li class="arch-node arch-node-key">
+              <strong>Smart Contract</strong>
+              <span><span lang="de">sperrt das Budget, gibt pro Meilenstein frei, protokolliert jeden Schritt</span><span lang="en">locks the budget, releases per milestone, records every step</span></span>
+            </li>
+            <li class="arch-node">
+              <strong><span lang="de">Unternehmer</span><span lang="en">Contractor</span></strong>
+              <span><span lang="de">erhält CHF aufs Firmenkonto</span><span lang="en">receives CHF in the company account</span></span>
+            </li>
+          </ol>
+        </div>
+        <div class="arch-notes">
+          <p><strong><span lang="de">Warum ein Smart Contract?</span><span lang="en">Why a smart contract?</span></strong> <span lang="de">Die vereinbarten Bedingungen sind fälschungssicher festgehalten. Weder billDsmart noch eine Partei kann das Geld eigenmächtig verschieben.</span><span lang="en">The agreed conditions are recorded tamper-proof. Neither billDsmart nor either party can move the money on their own.</span></p>
+          <p><strong><span lang="de">Warum ein Stablecoin in Franken?</span><span lang="en">Why a Swiss franc stablecoin?</span></strong> <span lang="de">Ein Token entspricht einem Franken. Der Betrag schwankt nicht und kann sofort freigegeben werden, wenn die Bedingungen erfüllt sind.</span><span lang="en">One token equals one franc. The amount doesn't fluctuate and can be released immediately once the conditions are met.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ON-/OFF-RAMP UND KYC -->
+    <section class="section section-dark" id="ein-auszahlung" aria-labelledby="ramp-title">
+      <div class="container">
+        <h2 id="ramp-title" class="section-title">
+          <span lang="de">Franken rein, Franken raus. Ohne Wallet.</span>
+          <span lang="en">Francs in, francs out. No wallet.</span>
+        </h2>
+        <p class="ramp-lead">
+          <span lang="de">Ein Malerbetrieb in Root will keine Wallet verwalten und keine Stablecoins halten. Er will Franken auf seinem Konto. Genau so funktioniert billDsmart: Beide Seiten zahlen und erhalten Franken, der Umtausch passiert im Hintergrund.</span>
+          <span lang="en">A painting business in Root doesn't want to manage a wallet or hold stablecoins. It wants francs in its account. That's exactly how billDsmart works: both sides pay and receive francs, and the exchange happens in the background.</span>
+        </p>
+        <ol class="ramp">
+          <li>
+            <h3><span lang="de">Einzahlung (On-Ramp)</span><span lang="en">Deposit (on-ramp)</span></h3>
+            <p><span lang="de">Die Bauherrschaft überweist das Budget per Banküberweisung oder QR-Rechnung auf das Konto der Partnerbank. Der regulierte Umtauschpartner tauscht den Betrag 1:1 in CHF-Stablecoin, die direkt im Smart Contract gesperrt werden.</span><span lang="en">The client transfers the budget by bank transfer or QR bill to the partner bank's account. The regulated exchange partner swaps the amount 1:1 into CHF stablecoin, which is locked straight into the smart contract.</span></p>
           </li>
-          <li class="step">
-            <h3><span lang="de">Budget hinterlegen</span><span lang="en">Deposit the budget</span></h3>
-            <p><span lang="de">Die Bauherrschaft zahlt den Projektbetrag auf das Treuhandkonto der Partnerbank ein. Ab jetzt sehen alle: Das Geld ist da.</span><span lang="en">The client pays the project amount into the partner bank's escrow account. From now on, everyone can see the money is there.</span></p>
+          <li>
+            <h3><span lang="de">Während des Projekts</span><span lang="en">During the project</span></h3>
+            <p><span lang="de">Die Token liegen beim Umtauschpartner in Verwahrung. Niemand kann darüber verfügen, solange kein Meilenstein freigegeben ist. Beide Seiten sehen den gesicherten Betrag in Franken.</span><span lang="en">The tokens are held in custody by the exchange partner. Nobody can access them until a milestone is approved. Both sides see the secured amount in francs.</span></p>
           </li>
-          <li class="step">
-            <h3><span lang="de">Arbeit melden und abnehmen</span><span lang="en">Report and approve work</span></h3>
-            <p><span lang="de">Der Unternehmer meldet einen Meilenstein als erledigt, auch per App direkt auf der Baustelle. Die Bauherrschaft prüft und gibt frei.</span><span lang="en">The contractor marks a milestone as done, also via the app right on site. The client checks and approves it.</span></p>
-          </li>
-          <li class="step">
-            <h3><span lang="de">Teilbetrag auszahlen</span><span lang="en">Release the payment</span></h3>
-            <p><span lang="de">Ein Smart Contract prüft die vereinbarten Bedingungen, die Partnerbank überweist den Teilbetrag. Jede Zahlung wird lückenlos dokumentiert.</span><span lang="en">A smart contract checks the agreed conditions and the partner bank transfers the partial payment. Every payment is fully documented.</span></p>
+          <li>
+            <h3><span lang="de">Auszahlung (Off-Ramp)</span><span lang="en">Payout (off-ramp)</span></h3>
+            <p><span lang="de">Nach der Freigabe tauscht der Partner den Teilbetrag zurück in Franken, und die Partnerbank überweist ihn auf das geprüfte Firmenkonto des Unternehmers.</span><span lang="en">After approval, the partner swaps the partial amount back into francs and the partner bank transfers it to the contractor's verified company account.</span></p>
           </li>
         </ol>
-        <div class="callouts">
-          <p class="callout">
-            <strong><span lang="de">Bei Uneinigkeit bleibt das Geld, wo es ist.</span><span lang="en">If you disagree, the money stays where it is.</span></strong>
-            <span lang="de">Ist ein Meilenstein umstritten, bleibt der Betrag auf dem Treuhandkonto, bis die Parteien sich einigen. Wir empfehlen Ihnen unabhängige Mediatorinnen und Bauschiedsrichter.</span>
-            <span lang="en">If a milestone is disputed, the amount stays in escrow until the parties agree. We recommend independent mediators and construction arbitrators.</span>
-          </p>
-          <p class="callout">
-            <strong><span lang="de">Alles an einem Ort.</span><span lang="en">Everything in one place.</span></strong>
-            <span lang="de">Verträge, Meilensteine, Zahlungen und Dokumente liegen zentral auf der Plattform, statt verteilt über lange E-Mail-Verläufe.</span>
-            <span lang="en">Contracts, milestones, payments and documents sit on one platform instead of being scattered across long email threads.</span>
-          </p>
+
+        <div class="roles">
+          <h3><span lang="de">Wer macht was</span><span lang="en">Who does what</span></h3>
+          <dl class="roles-list">
+            <div><dt>billDsmart</dt><dd><span lang="de">Plattform, App, Verträge und Zahlungsaufträge. Verwahrt kein Geld.</span><span lang="en">Platform, app, contracts and payment instructions. Holds no money.</span></dd></div>
+            <div><dt><span lang="de">Partnerbank</span><span lang="en">Partner bank</span></dt><dd><span lang="de">CHF-Konto für Ein- und Auszahlungen, Überweisungen auf Schweizer Konten.</span><span lang="en">CHF account for deposits and payouts, transfers to Swiss accounts.</span></dd></div>
+            <div><dt><span lang="de">Regulierter Umtauschpartner</span><span lang="en">Regulated exchange partner</span></dt><dd><span lang="de">Bank oder beaufsichtigter Broker: Umtausch CHF ↔ Stablecoin, Verwahrung der Token, Geldwäschereiprüfung.</span><span lang="en">Bank or supervised broker: CHF ↔ stablecoin exchange, token custody, anti-money-laundering checks.</span></dd></div>
+            <div><dt><span lang="de">Blockchain-Partner</span><span lang="en">Blockchain partner</span></dt><dd><span lang="de">Infrastruktur, Entwicklung und Prüfung (Audit) der Smart Contracts.</span><span lang="en">Infrastructure, development and audit of the smart contracts.</span></dd></div>
+          </dl>
+        </div>
+
+        <div class="kyc">
+          <h3><span lang="de">Onboarding und KYC für Firmen</span><span lang="en">Onboarding and KYC for companies</span></h3>
+          <ol class="kyc-steps">
+            <li><strong><span lang="de">Konto eröffnen</span><span lang="en">Open an account</span></strong><span><span lang="de">Firma, Kontaktperson und E-Mail erfassen.</span><span lang="en">Enter company, contact person and email.</span></span></li>
+            <li><strong><span lang="de">Firma prüfen</span><span lang="en">Verify the company</span></strong><span><span lang="de">UID und Handelsregistereintrag, wirtschaftlich berechtigte Personen.</span><span lang="en">Business ID (UID) and commercial register entry, beneficial owners.</span></span></li>
+            <li><strong><span lang="de">Identität bestätigen</span><span lang="en">Confirm identity</span></strong><span><span lang="de">Ausweis und Selfie-Video der zeichnungsberechtigten Person.</span><span lang="en">ID document and selfie video of the authorised signatory.</span></span></li>
+            <li><strong><span lang="de">Bankkonto hinterlegen</span><span lang="en">Add bank account</span></strong><span><span lang="de">IBAN auf den Firmennamen, wird mit einer Testüberweisung bestätigt.</span><span lang="en">IBAN in the company's name, confirmed by a test transfer.</span></span></li>
+            <li><strong><span lang="de">Freigeschaltet</span><span lang="en">Activated</span></strong><span><span lang="de">Die Firma kann Verträge abschliessen. Eine Wallet braucht sie nie.</span><span lang="en">The company can sign contracts. It never needs a wallet.</span></span></li>
+          </ol>
+          <p class="kyc-note"><span lang="de">Die Prüfung führt der regulierte Partner nach den Schweizer Regeln gegen Geldwäscherei durch. Private Bauherrschaften bestätigen nur Identität und Bankkonto.</span><span lang="en">The regulated partner carries out the checks under Swiss anti-money-laundering rules. Private clients only confirm their identity and bank account.</span></p>
         </div>
       </div>
     </section>
@@ -322,13 +534,13 @@
     <section class="section section-dark" id="sicherheit" aria-labelledby="sicherheit-title">
       <div class="container">
         <h2 id="sicherheit-title" class="section-title">
-          <span lang="de">Das Geld liegt bei der Bank, nicht bei uns.</span>
-          <span lang="en">The money sits with the bank, not with us.</span>
+          <span lang="de">Ihr Geld liegt nie bei uns.</span>
+          <span lang="en">Your money never sits with us.</span>
         </h2>
         <div class="trust">
           <div class="trust-item">
             <h3><span lang="de">Partnerbank</span><span lang="en">Partner bank</span></h3>
-            <p><span lang="de">Eine Schweizer Partnerbank führt das Treuhandkonto und wickelt alle Zahlungen ab. billDsmart übermittelt nur die Zahlungsaufträge über eine gesicherte Schnittstelle.</span><span lang="en">A Swiss partner bank runs the escrow account and executes every payment. billDsmart only sends the payment instructions through a secured interface.</span></p>
+            <p><span lang="de">Eine Schweizer Partnerbank wickelt alle Ein- und Auszahlungen in Franken ab, ein regulierter Partner verwahrt die Token. billDsmart übermittelt nur Zahlungsaufträge über eine gesicherte Schnittstelle.</span><span lang="en">A Swiss partner bank handles all deposits and payouts in francs, and a regulated partner holds the tokens in custody. billDsmart only sends payment instructions through a secured interface.</span></p>
           </div>
           <div class="trust-item">
             <h3>Smart Contracts</h3>
@@ -360,7 +572,7 @@
         <div class="faq">
           <details>
             <summary><span lang="de">Wer hält das Geld während des Projekts?</span><span lang="en">Who holds the money during the project?</span></summary>
-            <p><span lang="de">Unsere Partnerbank. Das Budget liegt auf einem bankgeführten Treuhandkonto, bis die vereinbarten Bedingungen erfüllt sind. billDsmart selbst verwahrt keine Gelder.</span><span lang="en">Our partner bank. The budget sits in a bank-managed escrow account until the agreed conditions are met. billDsmart itself never holds the funds.</span></p>
+            <p><span lang="de">Ihre Franken gehen an unsere Partnerbank und werden 1:1 in CHF-Stablecoin getauscht, die im Smart Contract gesperrt sind. Die Token verwahrt ein regulierter Partner, bis die vereinbarten Bedingungen erfüllt sind. billDsmart selbst verwahrt keine Gelder.</span><span lang="en">Your francs go to our partner bank and are swapped 1:1 into CHF stablecoin, which is locked in the smart contract. A regulated partner holds the tokens in custody until the agreed conditions are met. billDsmart itself never holds the funds.</span></p>
           </details>
           <details>
             <summary><span lang="de">Was passiert, wenn wir uns über einen Meilenstein nicht einig sind?</span><span lang="en">What happens if we disagree about a milestone?</span></summary>
@@ -372,7 +584,7 @@
           </details>
           <details>
             <summary><span lang="de">Muss ich mich mit Blockchain oder Kryptowährungen auskennen?</span><span lang="en">Do I need to know about blockchain or crypto?</span></summary>
-            <p><span lang="de">Nein. Die Smart Contracts laufen im Hintergrund. Sie arbeiten mit Projekten, Meilensteinen und Freigaben, die Zahlungen laufen in Franken über die Partnerbank.</span><span lang="en">No. The smart contracts run in the background. You work with projects, milestones and approvals, and payments are made in Swiss francs through the partner bank.</span></p>
+            <p><span lang="de">Nein. Sie zahlen und erhalten Franken, eine Wallet brauchen Sie nie. Umtausch und Verwahrung übernimmt ein regulierter Partner, die Smart Contracts laufen im Hintergrund.</span><span lang="en">No. You pay and receive francs and never need a wallet. A regulated partner handles exchange and custody, and the smart contracts run in the background.</span></p>
           </details>
           <details>
             <summary><span lang="de">Können wir Meilensteine und Bedingungen selbst festlegen?</span><span lang="en">Can we define milestones and conditions ourselves?</span></summary>
@@ -466,6 +678,36 @@
     </div>
   </footer>
 
+  <dialog class="login-dialog" id="login-dialog" aria-labelledby="login-title">
+    <form class="login-form" id="login-form" novalidate>
+      <button type="button" class="dialog-close" data-close-login aria-label="Schliessen">×</button>
+      <img src="assets/logo.svg" alt="billDsmart" class="login-logo" width="168" height="40">
+      <h2 id="login-title"><span lang="de">Anmelden</span><span lang="en">Sign in</span></h2>
+      <div class="field">
+        <label for="login-email"><span lang="de">E-Mail</span><span lang="en">Email</span></label>
+        <input type="email" id="login-email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="login-password"><span lang="de">Passwort</span><span lang="en">Password</span></label>
+        <input type="password" id="login-password" autocomplete="current-password" required>
+      </div>
+      <p class="field-error" id="login-error" role="alert"></p>
+      <button type="submit" class="btn btn-primary login-submit"><span lang="de">Anmelden</span><span lang="en">Sign in</span></button>
+      <div class="demo-accounts">
+        <p><strong><span lang="de">Demo-Zugänge</span><span lang="en">Demo accounts</span></strong></p>
+        <button type="button" class="demo-account" data-fill="private.client@gmail.com" data-pw="12345678">
+          <span><span lang="de">Private Bauherrschaft</span><span lang="en">Private client</span></span>
+          <small>private.client@gmail.com</small><small><span lang="de">Passwort</span><span lang="en">Password</span> 12345678</small>
+        </button>
+        <button type="button" class="demo-account" data-fill="constructor@gmail.com" data-pw="87654321">
+          <span><span lang="de">Unternehmer</span><span lang="en">Contractor</span></span>
+          <small>constructor@gmail.com</small><small><span lang="de">Passwort</span><span lang="en">Password</span> 87654321</small>
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

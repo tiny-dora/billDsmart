@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>billDsmart – Plattform</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1C3258">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="app-body">
+  <a class="skip-link" href="#app-main">Zum Inhalt springen</a>
+
+  <!-- Wird angezeigt, wenn niemand angemeldet ist -->
+  <div class="app-login" id="app-login" hidden>
+    <form class="login-form login-card" id="app-login-form" novalidate>
+      <a href="index.html"><img src="assets/logo.svg" alt="billDsmart" class="login-logo" width="168" height="40"></a>
+      <h1 id="al-title">Anmelden</h1>
+      <div class="field">
+        <label for="al-email" id="al-email-label">E-Mail</label>
+        <input type="email" id="al-email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="al-password" id="al-pw-label">Passwort</label>
+        <input type="password" id="al-password" autocomplete="current-password" required>
+      </div>
+      <p class="field-error" id="al-error" role="alert"></p>
+      <button type="submit" class="btn btn-primary login-submit" id="al-submit">Anmelden</button>
+      <div class="demo-accounts" id="al-demo"></div>
+      <p class="al-back"><a href="index.html" id="al-back">Zurück zur Website</a></p>
+    </form>
+  </div>
+
+  <!-- Plattform -->
+  <div class="app" id="app" hidden>
+    <div class="demo-bar" id="demo-bar"></div>
+    <header class="app-header">
+      <a class="brand" href="index.html"><img src="assets/logo.svg" alt="billDsmart" width="150" height="36"></a>
+      <div class="app-project" id="app-project"></div>
+      <div class="app-header-actions">
+        <div class="lang-switch" role="group" aria-label="Sprache / Language">
+          <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
+          <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <div class="user-chip" id="user-chip"></div>
+        <button type="button" class="btn btn-secondary btn-small" data-action="logout" id="logout-btn">Abmelden</button>
+      </div>
+    </header>
+    <div class="app-shell">
+      <nav class="app-nav" id="app-nav" aria-label="Plattform"></nav>
+      <main class="app-main" id="app-main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div class="modal-root" id="modal-root"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

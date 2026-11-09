@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" font-family="Helvetica, Arial, sans-serif">
+  <rect width="600" height="800" fill="#fff"/>
+  <text x="50" y="70" font-size="22" font-weight="700" fill="#1C3258">Malerei Brunner GmbH</text>
+  <text x="50" y="92" font-size="12" fill="#56627A">Root LU · MWST-Nr. CHE-000.000.000 (Demo)</text>
+  <text x="380" y="160" font-size="12" fill="#1C3258">Sandra Meier</text><text x="380" y="176" font-size="12" fill="#1C3258">Udligenswil LU</text>
+  <text x="50" y="230" font-size="20" font-weight="700" fill="#1C3258">Rechnung Nr. 2026-0317</text>
+  <text x="50" y="252" font-size="12" fill="#56627A">Projekt P-2026-0142 · Meilenstein 1 · 01.10.2026</text>
+  <g font-size="13" fill="#1C3258">
+    <line x1="50" y1="285" x2="550" y2="285" stroke="#1C3258"/>
+    <text x="50" y="310">Gerüst stellen (inkl. Miete 6 Wochen)</text><text x="550" y="310" text-anchor="end">4’200.00</text>
+    <text x="50" y="336">Abdecken und Abkleben</text><text x="550" y="336" text-anchor="end">1’350.00</text>
+    <text x="50" y="362">Fassade reinigen (Hochdruck)</text><text x="550" y="362" text-anchor="end">2’150.00</text>
+    <text x="50" y="388">Risse und Abplatzungen ausbessern</text><text x="550" y="388" text-anchor="end">1’900.00</text>
+    <line x1="50" y1="408" x2="550" y2="408" stroke="#D3D9E3"/>
+    <text x="50" y="434" font-weight="700">Total Meilenstein 1 (inkl. MWST)</text><text x="550" y="434" text-anchor="end" font-weight="700">CHF 9’600.00</text>
+  </g>
+  <rect x="50" y="480" width="500" height="70" fill="#F3F5F8"/>
+  <text x="66" y="510" font-size="13" fill="#1C3258" font-weight="700">Zahlung über billDsmart</text>
+  <text x="66" y="530" font-size="12" fill="#56627A">Wird nach Freigabe des Meilensteins automatisch aus dem Treuhand ausbezahlt.</text>
+  <text x="50" y="760" font-size="12" fill="#56627A">Demo-Dokument · fiktive Daten</text>
+</svg>

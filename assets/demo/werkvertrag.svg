@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" font-family="Helvetica, Arial, sans-serif">
+  <rect width="600" height="800" fill="#fff"/>
+  <rect x="0" y="0" width="600" height="10" fill="#D4642D"/>
+  <text x="50" y="80" font-size="22" font-weight="700" fill="#1C3258">Werkvertrag mit Meilensteinzahlung</text>
+  <text x="50" y="104" font-size="12" fill="#56627A">erstellt mit billDsmart · Projekt P-2026-0142</text>
+  <g font-size="13" fill="#1C3258">
+    <text x="50" y="150" font-weight="700">Bauherrschaft</text><text x="50" y="170">Sandra Meier, Udligenswil LU</text>
+    <text x="320" y="150" font-weight="700">Unternehmer</text><text x="320" y="170">Malerei Brunner GmbH, Root LU</text>
+    <text x="50" y="220" font-weight="700">Werk: Malerarbeiten aussen und innen, Einfamilienhaus</text>
+    <text x="50" y="246">Auftragssumme CHF 86’400.00 inkl. MWST, zahlbar in 5 Meilensteinen.</text>
+    <text x="50" y="272">Das Budget wird vor Arbeitsbeginn über billDsmart gesichert.</text>
+    <text x="50" y="298">Freigabe je Meilenstein nach Abnahme durch die Bauherrschaft.</text>
+    <text x="50" y="324">Bei Beanstandung bleibt der Betrag blockiert, bis eine Einigung</text>
+    <text x="50" y="346">vorliegt (Schlichtung, notariell beglaubigt).</text>
+    <text x="50" y="372">Gebühr 0.3 % des Projektvolumens, getragen von der Bauherrschaft.</text>
+  </g>
+  <text x="50" y="760" font-size="12" fill="#56627A">Demo-Dokument · fiktive Daten</text>
+</svg>

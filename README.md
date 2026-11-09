@@ -5,10 +5,38 @@ Inhalte basieren auf dem Business Model Canvas, Farben und Schrift auf dem billD
 
 Live: https://tiny-dora.github.io/billDsmart/
 
+## Plattform-Demo (Login)
+
+Über «Anmelden» auf der Website oder direkt unter `app.html`:
+
+| Rolle | E-Mail | Passwort |
+|---|---|---|
+| Private Bauherrschaft (Nina Muster) | private.client@gmail.com | 12345678 |
+| Unternehmer (Malerei Beispiel GmbH) | constructor@gmail.com | 87654321 |
+
+Beide sehen **denselben Vertrag** (Malerarbeiten Musterweg 5, Root, CHF 48'000, fünf Meilensteine).
+Ablauf zum Durchspielen: Bauherrschaft unterschreibt → zahlt ein (CHF → CHF-Stablecoin im Smart Contract) →
+Unternehmer erledigt Aufgaben und meldet Meilenstein mit Fotos → Bauherrschaft gibt frei (Auszahlung in CHF)
+oder beanstandet → Fachperson aus der Nähe wählen → Schlichtung → Schreiben hochladen → automatische E-Mail ans Notariat → Beglaubigung → Aufteilung.
+
+Funktionen: Übersicht mit nächstem Schritt, Smart Contract mit Protokoll, Zahlungen und offene Beträge,
+Meilensteine mit Aufgaben, Chat mit Dateien (Pläne, Rechnungen, Fotos) und Kommentaren, Hilfe bei Uneinigkeit
+mit schweizweitem Verzeichnis (fiktive Beispielkontakte), Profil/KYC, Premium-Vorschau (Multi-Projekt-Dashboard, Reporting).
+
+Oben in der Plattform: «Szenario Vertragsstart» / «Szenario Projekt läuft» setzt die Demo zurück, «Rolle wechseln» meldet ab und öffnet das andere Konto.
+
+**Wichtig:** Das ist ein Prototyp ohne Server. Die Zugangsdaten stehen im Klartext in `js/auth.js`,
+alle Daten liegen im localStorage des jeweiligen Browsers (andere Geräte sehen andere Daten).
+Es fliesst kein Geld und es werden keine E-Mails versendet (sie werden in der Plattform angezeigt).
+
 ## Inhalt
 
 ```
-index.html        Seite (alle Texte, Deutsch und Englisch)
+index.html        Website (alle Texte, Deutsch und Englisch)
+app.html          Plattform nach dem Login
+js/auth.js        Demo-Zugänge und Anmeldung
+js/app.js         Plattform: Daten, Ansichten, Abläufe (Texte DE/EN im Objekt T)
+css/app.css       Design der Plattform
 css/styles.css    Design
 js/main.js        Interaktivität und Einstellungen
 assets/logo.svg        Logo als Vektorgrafik (für helle Hintergründe)

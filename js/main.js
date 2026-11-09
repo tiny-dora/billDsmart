@@ -49,6 +49,11 @@ const TEXT = {
       done: "Alle Meilensteine sind abgenommen und ausbezahlt. Das Projekt ist abgeschlossen.",
     },
     shareOut: "{n} %",
+    login: {
+      missing: "Bitte geben Sie E-Mail und Passwort ein.",
+      wrong: "E-Mail oder Passwort stimmt nicht. Nutzen Sie einen der Demo-Zugänge unten.",
+      toApp: "Zur Plattform",
+    },
     form: {
       nameMissing: "Bitte geben Sie Ihren Namen ein.",
       emailMissing: "Bitte geben Sie eine gültige E-Mail-Adresse ein, z. B. name@firma.ch.",
@@ -90,6 +95,11 @@ const TEXT = {
       done: "All milestones are approved and paid. The project is complete.",
     },
     shareOut: "{n}%",
+    login: {
+      missing: "Please enter your email and password.",
+      wrong: "Email or password is incorrect. Use one of the demo accounts below.",
+      toApp: "Go to platform",
+    },
     form: {
       nameMissing: "Please enter your name.",
       emailMissing: "Please enter a valid email address, e.g. name@company.ch.",
@@ -363,6 +373,54 @@ function initForm() {
   });
 }
 
+/* ---------- Ablauf mit Handy-Mockup ---------- */
+function initLifecycle() {
+  const steps = Array.from(document.querySelectorAll(".lc-step"));
+  const views = document.querySelectorAll(".phone-view");
+  if (!steps.length) return;
+  const show = (n) => {
+    steps.forEach((s) => s.setAttribute("aria-pressed", String(s.dataset.step === n)));
+    views.forEach((v) => { v.hidden = v.dataset.view !== n; });
+  };
+  steps.forEach((s) => s.addEventListener("click", () => show(s.dataset.step)));
+}
+
+/* ---------- Login ---------- */
+function initLogin() {
+  const dialog = document.getElementById("login-dialog");
+  if (!dialog || typeof Auth === "undefined") return;
+  const form = document.getElementById("login-form");
+  const email = document.getElementById("login-email");
+  const pw = document.getElementById("login-password");
+  const err = document.getElementById("login-error");
+
+  const open = () => {
+    const s = Auth.session();
+    if (s) { window.location.href = "app.html"; return; }
+    err.textContent = "";
+    if (typeof dialog.showModal === "function") dialog.showModal(); else dialog.setAttribute("open", "");
+    email.focus();
+  };
+  const close = () => { if (dialog.open) dialog.close(); };
+
+  document.querySelectorAll("[data-open-login]").forEach((b) => b.addEventListener("click", open));
+  dialog.querySelector("[data-close-login]").addEventListener("click", close);
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) close(); });
+  dialog.querySelectorAll("[data-fill]").forEach((b) => b.addEventListener("click", () => {
+    email.value = b.dataset.fill; pw.value = b.dataset.pw; err.textContent = "";
+    form.querySelector(".login-submit").focus();
+  }));
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!email.value.trim() || !pw.value) { err.textContent = t().login.missing; return; }
+    const s = Auth.login(email.value, pw.value);
+    if (!s) { err.textContent = t().login.wrong; pw.select(); return; }
+    window.location.href = "app.html";
+  });
+  if (location.hash === "#login") open();
+  window.addEventListener("hashchange", () => { if (location.hash === "#login") open(); });
+}
+
 /* ---------- Start ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = new Date().getFullYear();
@@ -371,5 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initCalc();
   initForm();
+  initLifecycle();
+  initLogin();
   initLang();
 });
