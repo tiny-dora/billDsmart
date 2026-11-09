@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>billDsmart – Sichere Zahlungen am Bau</title>
+  <meta name="description" content="billDsmart hält das Baubudget auf einem Treuhandkonto einer Schweizer Partnerbank und zahlt Meilenstein für Meilenstein aus – sobald die Arbeit abgenommen ist.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main"><span lang="de">Zum Inhalt springen</span><span lang="en">Skip to content</span></a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="billDsmart">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M7 26V15M16 26V7M25 26V15" />
+          <path d="M7 15L16 7L25 15" />
+          <path d="M4 26H28" />
+          <circle cx="7" cy="15" r="2.6" />
+          <circle cx="16" cy="7" r="2.6" />
+          <circle cx="25" cy="15" r="2.6" />
+        </svg>
+        <span class="brand-name">billDsmart</span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="#funktionsweise"><span lang="de">So funktioniert's</span><span lang="en">How it works</span></a></li>
+          <li><a href="#zielgruppen"><span lang="de">Für wen</span><span lang="en">Who it's for</span></a></li>
+          <li><a href="#preise"><span lang="de">Preise</span><span lang="en">Pricing</span></a></li>
+          <li><a href="#sicherheit"><span lang="de">Sicherheit</span><span lang="en">Security</span></a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Sprache / Language">
+          <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
+          <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary btn-small header-cta" href="#kontakt"><span lang="de">Demo anfragen</span><span lang="en">Request a demo</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+          <span class="visually-hidden"><span lang="de">Menü</span><span lang="en">Menu</span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>
+            <span lang="de">Bezahlt wird, was gebaut ist.</span>
+            <span lang="en">Pay for what has been built.</span>
+          </h1>
+          <p class="lead">
+            <span lang="de">billDsmart hält das Projektbudget auf einem Treuhandkonto unserer Schweizer Partnerbank und gibt es Meilenstein für Meilenstein frei, sobald die Bauherrschaft die Arbeit abgenommen hat. Handwerker wissen, dass das Geld da ist. Bauherrschaften zahlen nur für abgenommene Arbeit.</span>
+            <span lang="en">billDsmart holds the project budget in an escrow account at our Swiss partner bank and releases it milestone by milestone once the client has approved the work. Contractors know the money is there. Clients only pay for work they have accepted.</span>
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#kontakt"><span lang="de">Demo anfragen</span><span lang="en">Request a demo</span></a>
+            <a class="btn btn-secondary" href="#funktionsweise"><span lang="de">So funktioniert's</span><span lang="en">How it works</span></a>
+          </div>
+        </div>
+
+        <!-- Interaktive Treuhand-Demo -->
+        <div class="demo" aria-labelledby="demo-title">
+          <div class="demo-head">
+            <div>
+              <h2 class="demo-title" id="demo-title">
+                <span lang="de">Neubau Mehrfamilienhaus</span>
+                <span lang="en">New multi-family building</span>
+              </h2>
+              <p class="demo-hint">
+                <span lang="de">Spielen Sie das Projekt durch: Melden Sie Arbeiten als fertig und geben Sie sie frei.</span>
+                <span lang="en">Play through the project: mark work as done and approve it.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="balance">
+            <div class="balance-figures">
+              <div class="figure">
+                <span class="figure-label"><span lang="de">Auf dem Treuhandkonto</span><span lang="en">Held in escrow</span></span>
+                <strong class="figure-value" id="escrow-amount">CHF 1’200’000</strong>
+              </div>
+              <div class="figure">
+                <span class="figure-label"><span lang="de">Ausbezahlt</span><span lang="en">Paid out</span></span>
+                <strong class="figure-value figure-paid" id="paid-amount">CHF 0</strong>
+              </div>
+            </div>
+            <div class="bar" id="bar" aria-hidden="true"></div>
+            <div class="dimension" aria-hidden="true">
+              <span><span lang="de">Auftragssumme</span><span lang="en">Contract value</span> <span id="total-amount">CHF 1’200’000</span></span>
+            </div>
+            <ul class="legend" aria-hidden="true">
+              <li><i class="swatch swatch-held"></i><span lang="de">Im Treuhand</span><span lang="en">In escrow</span></li>
+              <li><i class="swatch swatch-reported"></i><span lang="de">Wartet auf Freigabe</span><span lang="en">Awaiting approval</span></li>
+              <li><i class="swatch swatch-disputed"></i><span lang="de">Beanstandet</span><span lang="en">Disputed</span></li>
+              <li><i class="swatch swatch-paid"></i><span lang="de">Ausbezahlt</span><span lang="en">Paid</span></li>
+            </ul>
+          </div>
+
+          <ol class="milestones" id="milestones"></ol>
+
+          <div class="demo-foot">
+            <p class="demo-log" id="demo-log" aria-live="polite"></p>
+            <button type="button" class="link-btn" id="demo-reset"><span lang="de">Zurücksetzen</span><span lang="en">Reset</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUSGANGSLAGE -->
+    <section class="section" id="ausgangslage" aria-labelledby="ausgangslage-title">
+      <div class="container split">
+        <div class="split-intro">
+          <h2 id="ausgangslage-title">
+            <span lang="de">Am Bau trägt der Kleinste das grösste Zahlungsrisiko.</span>
+            <span lang="en">In construction, the smallest firms carry the biggest payment risk.</span>
+          </h2>
+          <p>
+            <span lang="de">Subunternehmer arbeiten oft Wochen oder Monate vor, bevor sie Geld sehen. Geht ein Generalunternehmer Konkurs, bleiben sie auf Rechnungen für längst erledigte Arbeit sitzen. Gleichzeitig wollen Bauherrschaften nicht im Voraus zahlen, ohne zu wissen, ob die Arbeit gut gemacht wird.</span>
+            <span lang="en">Subcontractors often work for weeks or months before they see any money. If a general contractor goes bankrupt, they are left with unpaid invoices for work long completed. At the same time, clients don't want to pay upfront without knowing the work will be done well.</span>
+          </p>
+        </div>
+        <dl class="facts">
+          <div class="fact">
+            <dt>CHF 67,4 <span lang="de">Mrd.</span><span lang="en">bn</span></dt>
+            <dd>
+              <span lang="de">Bauausgaben in der Schweiz 2024, davon 35,0 Mrd. für Neubauten und 26,4 Mrd. für Umbau, Erweiterung und Abbruch.</span>
+              <span lang="en">Construction spending in Switzerland in 2024, of which 35.0 bn on new construction and 26.4 bn on renovation, extension and demolition.</span>
+              <cite>BFS, 2025</cite>
+            </dd>
+          </div>
+          <div class="fact">
+            <dt><span lang="de">über 80 %</span><span lang="en">over 80%</span></dt>
+            <dd>
+              <span lang="de">der Firmen im Hochbau haben weniger als zehn Mitarbeitende und kaum Verhandlungsmacht gegenüber Auftraggebern.</span>
+              <span lang="en">of building construction firms have fewer than ten employees and little bargaining power towards their clients.</span>
+              <cite>GTAI, 2024</cite>
+            </dd>
+          </div>
+          <div class="fact">
+            <dt>1’192</dt>
+            <dd>
+              <span lang="de">Baufirmen gingen zwischen Januar und September 2025 Konkurs, rund 14 % aller Firmenkonkurse in der Schweiz.</span>
+              <span lang="en">construction companies went bankrupt between January and September 2025, around 14% of all company bankruptcies in Switzerland.</span>
+              <cite>platformj, 2025</cite>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- FUNKTIONSWEISE -->
+    <section class="section section-light" id="funktionsweise" aria-labelledby="funktionsweise-title">
+      <div class="container">
+        <h2 id="funktionsweise-title" class="section-title">
+          <span lang="de">So läuft ein Projekt mit billDsmart</span>
+          <span lang="en">How a project runs on billDsmart</span>
+        </h2>
+        <ol class="steps">
+          <li class="step">
+            <h3><span lang="de">Vertrag aufsetzen</span><span lang="en">Set up the contract</span></h3>
+            <p><span lang="de">Bauherrschaft und Unternehmer legen Meilensteine, Beträge und Freigabebedingungen gemeinsam fest, genau so, wie es zum Projekt passt.</span><span lang="en">Client and contractor agree on milestones, amounts and release conditions together, tailored to the project.</span></p>
+          </li>
+          <li class="step">
+            <h3><span lang="de">Budget hinterlegen</span><span lang="en">Deposit the budget</span></h3>
+            <p><span lang="de">Die Bauherrschaft zahlt den Projektbetrag auf das Treuhandkonto der Partnerbank ein. Ab jetzt sehen alle: Das Geld ist da.</span><span lang="en">The client pays the project amount into the partner bank's escrow account. From now on, everyone can see the money is there.</span></p>
+          </li>
+          <li class="step">
+            <h3><span lang="de">Arbeit melden und abnehmen</span><span lang="en">Report and approve work</span></h3>
+            <p><span lang="de">Der Unternehmer meldet einen Meilenstein als erledigt, auch per App direkt auf der Baustelle. Die Bauherrschaft prüft und gibt frei.</span><span lang="en">The contractor marks a milestone as done, also via the app right on site. The client checks and approves it.</span></p>
+          </li>
+          <li class="step">
+            <h3><span lang="de">Teilbetrag auszahlen</span><span lang="en">Release the payment</span></h3>
+            <p><span lang="de">Ein Smart Contract prüft die vereinbarten Bedingungen, die Partnerbank überweist den Teilbetrag. Jede Zahlung wird lückenlos dokumentiert.</span><span lang="en">A smart contract checks the agreed conditions and the partner bank transfers the partial payment. Every payment is fully documented.</span></p>
+          </li>
+        </ol>
+        <div class="callouts">
+          <p class="callout">
+            <strong><span lang="de">Bei Uneinigkeit bleibt das Geld, wo es ist.</span><span lang="en">If you disagree, the money stays where it is.</span></strong>
+            <span lang="de">Ist ein Meilenstein umstritten, bleibt der Betrag auf dem Treuhandkonto, bis die Parteien sich einigen. Wir empfehlen Ihnen unabhängige Mediatorinnen und Bauschiedsrichter.</span>
+            <span lang="en">If a milestone is disputed, the amount stays in escrow until the parties agree. We recommend independent mediators and construction arbitrators.</span>
+          </p>
+          <p class="callout">
+            <strong><span lang="de">Alles an einem Ort.</span><span lang="en">Everything in one place.</span></strong>
+            <span lang="de">Verträge, Meilensteine, Zahlungen und Dokumente liegen zentral auf der Plattform, statt verteilt über lange E-Mail-Verläufe.</span>
+            <span lang="en">Contracts, milestones, payments and documents sit on one platform instead of being scattered across long email threads.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZIELGRUPPEN -->
+    <section class="section" id="zielgruppen" aria-labelledby="zielgruppen-title">
+      <div class="container">
+        <h2 id="zielgruppen-title" class="section-title">
+          <span lang="de">Was billDsmart Ihnen bringt</span>
+          <span lang="en">What billDsmart does for you</span>
+        </h2>
+
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Zielgruppen">
+            <button type="button" role="tab" id="tab-bauherr" aria-controls="panel-bauherr" aria-selected="true">
+              <span lang="de">Bauherrschaft</span><span lang="en">Clients</span>
+            </button>
+            <button type="button" role="tab" id="tab-gu" aria-controls="panel-gu" aria-selected="false" tabindex="-1">
+              <span lang="de">Generalunternehmer</span><span lang="en">General contractors</span>
+            </button>
+            <button type="button" role="tab" id="tab-sub" aria-controls="panel-sub" aria-selected="false" tabindex="-1">
+              <span lang="de">Subunternehmer und Handwerk</span><span lang="en">Subcontractors and trades</span>
+            </button>
+          </div>
+
+          <div class="tab-panel" role="tabpanel" id="panel-bauherr" aria-labelledby="tab-bauherr" tabindex="0">
+            <p class="panel-who">
+              <span lang="de">Für private Bauherrschaften mit grösseren Projekten wie Mehrfamilienhäusern oder umfassenden Sanierungen sowie für Immobilienfonds, Pensionskassen, Wohnbaugenossenschaften und Gemeinden.</span>
+              <span lang="en">For private clients with larger projects such as multi-family buildings or major renovations, and for real estate funds, pension funds, housing cooperatives and municipalities.</span>
+            </p>
+            <ul class="benefits">
+              <li><strong><span lang="de">Sie zahlen nur für abgenommene Arbeit.</span><span lang="en">You only pay for accepted work.</span></strong> <span lang="de">Jede Zahlung wird erst ausgelöst, wenn Sie den Meilenstein freigeben.</span><span lang="en">Each payment is only triggered once you approve the milestone.</span></li>
+              <li><strong><span lang="de">Kleinere Beträge statt einer grossen Schlusszahlung.</span><span lang="en">Smaller amounts instead of one large final payment.</span></strong> <span lang="de">Die Auftragssumme verteilt sich über die Bauzeit.</span><span lang="en">The contract value is spread over the duration of the project.</span></li>
+              <li><strong><span lang="de">Fortschritt und Budget im Blick.</span><span lang="en">Progress and budget at a glance.</span></strong> <span lang="de">Sie sehen jederzeit, welche Meilensteine erledigt sind und welche Zahlungen anstehen, auch über viele Projekte hinweg.</span><span lang="en">You always see which milestones are done and which payments are coming up, across many projects too.</span></li>
+              <li><strong><span lang="de">Weniger Risiko durch Bauhandwerkerpfandrechte.</span><span lang="en">Lower risk of builders' liens.</span></strong> <span lang="de">Weil Handwerker nachweisbar bezahlt werden, sinkt das Risiko eines Pfandrechts auf Ihrem Grundstück.</span><span lang="en">Because contractors are verifiably paid, the risk of a lien on your property goes down.</span></li>
+            </ul>
+          </div>
+
+          <div class="tab-panel" role="tabpanel" id="panel-gu" aria-labelledby="tab-gu" tabindex="0" hidden>
+            <p class="panel-who">
+              <span lang="de">Für Generalunternehmer, die Projekte koordinieren und Subunternehmer für die einzelnen Gewerke beauftragen.</span>
+              <span lang="en">For general contractors who coordinate projects and commission subcontractors for the individual trades.</span>
+            </p>
+            <ul class="benefits">
+              <li><strong><span lang="de">Ein Projekt, alle Gewerke.</span><span lang="en">One project, every trade.</span></strong> <span lang="de">Sie bringen Ihr Projekt samt Subunternehmern auf eine Plattform und koordinieren alle Zahlungen an einem Ort.</span><span lang="en">You bring your project and all its subcontractors onto one platform and coordinate every payment in one place.</span></li>
+              <li><strong><span lang="de">Weniger Administration.</span><span lang="en">Less admin.</span></strong> <span lang="de">Freigaben, Belege und Zahlungsstatus sind dokumentiert, Rückfragen per E-Mail fallen weg.</span><span lang="en">Approvals, documents and payment status are on record, so the back-and-forth by email disappears.</span></li>
+              <li><strong><span lang="de">Ihr Ruf als verlässlicher Partner.</span><span lang="en">Your reputation as a reliable partner.</span></strong> <span lang="de">Subunternehmer arbeiten lieber für Sie, wenn sie wissen, dass ihr Geld gesichert ist.</span><span lang="en">Subcontractors prefer working for you when they know their money is secured.</span></li>
+              <li><strong><span lang="de">Persönliches Onboarding.</span><span lang="en">Personal onboarding.</span></strong> <span lang="de">Wir richten Ihre ersten Projekte gemeinsam mit Ihnen ein. Mit Premium erhalten Sie ein Multi-Projekt-Dashboard und erweitertes Reporting.</span><span lang="en">We set up your first projects together with you. Premium adds a multi-project dashboard and extended reporting.</span></li>
+            </ul>
+          </div>
+
+          <div class="tab-panel" role="tabpanel" id="panel-sub" aria-labelledby="tab-sub" tabindex="0" hidden>
+            <p class="panel-who">
+              <span lang="de">Für Elektro, Sanitär, Holzbau, Malerei und alle anderen Gewerke, vom Einzelbetrieb bis zum KMU.</span>
+              <span lang="en">For electricians, plumbers, carpenters, painters and every other trade, from sole traders to SMEs.</span>
+            </p>
+            <ul class="benefits">
+              <li><strong><span lang="de">Das Geld liegt bereit, bevor Sie anfangen.</span><span lang="en">The money is there before you start.</span></strong> <span lang="de">Das Budget ist auf dem Treuhandkonto hinterlegt, nicht beim Generalunternehmer.</span><span lang="en">The budget sits in the escrow account, not with the general contractor.</span></li>
+              <li><strong><span lang="de">Teilzahlungen statt Warten bis zum Schluss.</span><span lang="en">Partial payments instead of waiting until the end.</span></strong> <span lang="de">Nach jedem abgenommenen Meilenstein fliesst Geld. So wird Ihre Liquidität planbar.</span><span lang="en">Money flows after every approved milestone, which makes your cash flow predictable.</span></li>
+              <li><strong><span lang="de">Klarer Überblick.</span><span lang="en">A clear overview.</span></strong> <span lang="de">Status, offene Meilensteine und Zahlungstermine sehen Sie auf einen Blick, auch auf dem Handy.</span><span lang="en">Status, open milestones and payment dates at a glance, on your phone too.</span></li>
+              <li><strong><span lang="de">Neue Aufträge.</span><span lang="en">New jobs.</span></strong> <span lang="de">Auf Wunsch werden Sie als Anbieter gelistet und Bauherrschaften empfohlen.</span><span lang="en">If you like, you can be listed as a service provider and recommended to clients.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREISE -->
+    <section class="section section-light" id="preise" aria-labelledby="preise-title">
+      <div class="container">
+        <h2 id="preise-title" class="section-title">
+          <span lang="de">Preise</span>
+          <span lang="en">Pricing</span>
+        </h2>
+        <div class="pricing">
+          <div class="price-block calculator">
+            <h3><span lang="de">Transaktionsgebühr</span><span lang="en">Transaction fee</span></h3>
+            <p class="price-main"><span class="price-number"><span lang="de">0,3 %</span><span lang="en">0.3%</span></span> <span lang="de">des Projektvolumens im Treuhand</span><span lang="en">of the project volume held in escrow</span></p>
+            <p class="muted">
+              <span lang="de">Ohne Abo zahlen Sie nur diese Gebühr pro Projekt. Standardmässig trägt sie die Bauherrschaft. Auf Wunsch teilen sich Bauherrschaft und Unternehmer die Gebühr.</span>
+              <span lang="en">Without a subscription, this fee per project is all you pay. By default the client pays it. If both parties agree, client and contractor can split the fee.</span>
+            </p>
+
+            <form class="calc" id="calc" onsubmit="return false">
+              <div class="field">
+                <label for="calc-volume"><span lang="de">Projektvolumen in CHF</span><span lang="en">Project volume in CHF</span></label>
+                <input type="number" id="calc-volume" min="10000" max="100000000" step="1000" value="1200000" inputmode="numeric">
+                <input type="range" id="calc-range" min="50000" max="5000000" step="10000" value="1200000" aria-label="Projektvolumen">
+              </div>
+
+              <fieldset class="field">
+                <legend><span lang="de">Wer trägt die Gebühr?</span><span lang="en">Who pays the fee?</span></legend>
+                <div class="segmented">
+                  <label><input type="radio" name="split" value="100" checked><span><span lang="de">Bauherrschaft</span><span lang="en">Client</span></span></label>
+                  <label><input type="radio" name="split" value="50"><span><span lang="de">Hälfte-Hälfte</span><span lang="en">50/50</span></span></label>
+                  <label><input type="radio" name="split" value="custom"><span><span lang="de">Eigene Aufteilung</span><span lang="en">Custom</span></span></label>
+                </div>
+                <div class="custom-split" id="custom-split" hidden>
+                  <label for="calc-share"><span lang="de">Anteil Bauherrschaft</span><span lang="en">Client share</span>: <output id="share-out">70 %</output></label>
+                  <input type="range" id="calc-share" min="0" max="100" step="5" value="70">
+                </div>
+              </fieldset>
+
+              <dl class="calc-result" aria-live="polite">
+                <div class="calc-total"><dt><span lang="de">Gebühr total</span><span lang="en">Total fee</span></dt><dd id="fee-total">CHF 3’600</dd></div>
+                <div><dt><span lang="de">Bauherrschaft</span><span lang="en">Client</span></dt><dd id="fee-client">CHF 3’600</dd></div>
+                <div><dt><span lang="de">Unternehmer</span><span lang="en">Contractor</span></dt><dd id="fee-contractor">CHF 0</dd></div>
+              </dl>
+            </form>
+          </div>
+
+          <div class="price-block premium">
+            <h3>Premium <span class="premium-for"><span lang="de">für Generalunternehmer</span><span lang="en">for general contractors</span></span></h3>
+            <p class="price-main"><span class="price-number">CHF 290</span> <span lang="de">pro Monat</span><span lang="en">per month</span></p>
+            <p class="muted">
+              <span lang="de">Für Generalunternehmer, die mehrere Projekte gleichzeitig führen. Die Transaktionsgebühr pro Projekt bleibt bestehen.</span>
+              <span lang="en">For general contractors running several projects at once. The per-project transaction fee still applies.</span>
+            </p>
+            <ul class="checklist">
+              <li><span lang="de">Multi-Projekt-Dashboard für alle laufenden Baustellen</span><span lang="en">Multi-project dashboard for all ongoing sites</span></li>
+              <li><span lang="de">Erweitertes Reporting zu Budget, Fortschritt und Zahlungen</span><span lang="en">Extended reporting on budget, progress and payments</span></li>
+              <li><span lang="de">Persönliches Onboarding für Ihre ersten Projekte</span><span lang="en">Personal onboarding for your first projects</span></li>
+              <li class="planned"><span lang="de">Geplant: Anbindung an gängige Bau- und Buchhaltungssoftware</span><span lang="en">Planned: integration with common construction and accounting software</span></li>
+            </ul>
+            <a class="btn btn-primary" href="#kontakt" data-role-preset="gu"><span lang="de">Premium anfragen</span><span lang="en">Ask about Premium</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SICHERHEIT -->
+    <section class="section section-dark" id="sicherheit" aria-labelledby="sicherheit-title">
+      <div class="container">
+        <h2 id="sicherheit-title" class="section-title">
+          <span lang="de">Das Geld liegt bei der Bank, nicht bei uns.</span>
+          <span lang="en">The money sits with the bank, not with us.</span>
+        </h2>
+        <div class="trust">
+          <div class="trust-item">
+            <h3><span lang="de">Partnerbank</span><span lang="en">Partner bank</span></h3>
+            <p><span lang="de">Eine Schweizer Partnerbank führt das Treuhandkonto und wickelt alle Zahlungen ab. billDsmart übermittelt nur die Zahlungsaufträge über eine gesicherte Schnittstelle.</span><span lang="en">A Swiss partner bank runs the escrow account and executes every payment. billDsmart only sends the payment instructions through a secured interface.</span></p>
+          </div>
+          <div class="trust-item">
+            <h3>Smart Contracts</h3>
+            <p><span lang="de">Die vereinbarten Freigabebedingungen werden in Smart Contracts festgehalten und jeder Schritt wird dokumentiert. Entwickelt und geprüft mit spezialisierten Blockchain-Partnern.</span><span lang="en">The agreed release conditions are recorded in smart contracts and every step is documented. Developed and audited with specialised blockchain partners.</span></p>
+          </div>
+          <div class="trust-item">
+            <h3><span lang="de">Recht und Compliance</span><span lang="en">Legal and compliance</span></h3>
+            <p><span lang="de">Vertragsbedingungen und regulatorische Anforderungen erarbeiten wir mit Rechts- und Compliance-Fachleuten. Im Streitfall empfehlen wir unabhängige Expertinnen und Experten.</span><span lang="en">We work out contract terms and regulatory requirements with legal and compliance specialists. In a dispute, we recommend independent experts.</span></p>
+          </div>
+          <div class="trust-item">
+            <h3><span lang="de">Datenschutz</span><span lang="en">Data protection</span></h3>
+            <p><span lang="de">Projekt- und Finanzdaten werden geschützt gespeichert. IT- und Cyberrisiken überwachen wir laufend.</span><span lang="en">Project and financial data are stored securely. We monitor IT and cyber risks continuously.</span></p>
+          </div>
+        </div>
+        <p class="associations">
+          <span lang="de">Wir suchen die Zusammenarbeit mit Branchenverbänden wie dem Schweizerischen Baumeisterverband (SBV), suissetec und dem SIA, damit billDsmart dort ankommt, wo gebaut wird.</span>
+          <span lang="en">We are seeking cooperation with industry associations such as the Swiss Contractors' Association (SBV), suissetec and the SIA, so billDsmart reaches the people who build.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <h2 id="faq-title" class="section-title">
+          <span lang="de">Häufige Fragen</span>
+          <span lang="en">Frequently asked questions</span>
+        </h2>
+        <div class="faq">
+          <details>
+            <summary><span lang="de">Wer hält das Geld während des Projekts?</span><span lang="en">Who holds the money during the project?</span></summary>
+            <p><span lang="de">Unsere Partnerbank. Das Budget liegt auf einem bankgeführten Treuhandkonto, bis die vereinbarten Bedingungen erfüllt sind. billDsmart selbst verwahrt keine Gelder.</span><span lang="en">Our partner bank. The budget sits in a bank-managed escrow account until the agreed conditions are met. billDsmart itself never holds the funds.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Was passiert, wenn wir uns über einen Meilenstein nicht einig sind?</span><span lang="en">What happens if we disagree about a milestone?</span></summary>
+            <p><span lang="de">Der Betrag bleibt auf dem Treuhandkonto, bis der Streit beigelegt ist. Wir empfehlen Ihnen unabhängige Mediatorinnen, Bauschiedsrichter oder Rechtsfachleute. Die Kosten für deren Beratung tragen die Parteien direkt.</span><span lang="en">The amount stays in escrow until the dispute is resolved. We recommend independent mediators, construction arbitrators or legal experts. The parties pay for their advice directly.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Wer bezahlt die Gebühr von 0,3 %?</span><span lang="en">Who pays the 0.3% fee?</span></summary>
+            <p><span lang="de">Standardmässig die Bauherrschaft, weil sie das Projekt eröffnet und nur für abgenommene Arbeit zahlt. Weil auch Unternehmer von gesicherten und schnelleren Zahlungen profitieren, können die Parteien die Gebühr aufteilen.</span><span lang="en">By default the client, since they open the project and only pay for accepted work. Because contractors also benefit from secured and faster payments, the parties can split the fee.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Muss ich mich mit Blockchain oder Kryptowährungen auskennen?</span><span lang="en">Do I need to know about blockchain or crypto?</span></summary>
+            <p><span lang="de">Nein. Die Smart Contracts laufen im Hintergrund. Sie arbeiten mit Projekten, Meilensteinen und Freigaben, die Zahlungen laufen in Franken über die Partnerbank.</span><span lang="en">No. The smart contracts run in the background. You work with projects, milestones and approvals, and payments are made in Swiss francs through the partner bank.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Können wir Meilensteine und Bedingungen selbst festlegen?</span><span lang="en">Can we define milestones and conditions ourselves?</span></summary>
+            <p><span lang="de">Ja. Vertragsbedingungen, Meilensteine, Beträge und Freigabebedingungen legen Sie für jedes Projekt individuell fest.</span><span lang="en">Yes. You define contract terms, milestones, amounts and release conditions individually for each project.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Gibt es eine App für die Baustelle?</span><span lang="en">Is there an app for the construction site?</span></summary>
+            <p><span lang="de">Ja. Mit der mobilen App bestätigen Unternehmer Meilensteine und verfolgen Zahlungen direkt auf der Baustelle. Projekte und Budgets richten Sie auf der Web-Plattform ein.</span><span lang="en">Yes. With the mobile app, contractors confirm milestones and track payments right on site. You set up projects and budgets on the web platform.</span></p>
+          </details>
+          <details>
+            <summary><span lang="de">Wie bekomme ich Unterstützung?</span><span lang="en">How do I get support?</span></summary>
+            <p><span lang="de">Unser Support hilft per E-Mail und Telefon. Generalunternehmer und grössere Bauherrschaften erhalten zum Start ein persönliches Onboarding.</span><span lang="en">Our support team helps by email and phone. General contractors and larger clients get personal onboarding when they start.</span></p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="section section-light" id="kontakt" aria-labelledby="kontakt-title">
+      <div class="container split">
+        <div class="split-intro">
+          <h2 id="kontakt-title">
+            <span lang="de">Ihr nächstes Projekt mit gesicherten Zahlungen</span>
+            <span lang="en">Your next project with secured payments</span>
+          </h2>
+          <p>
+            <span lang="de">Erzählen Sie uns kurz von Ihrem Vorhaben. Wir zeigen Ihnen billDsmart an einem Beispiel aus Ihrem Alltag und richten auf Wunsch Ihr erstes Projekt mit Ihnen ein.</span>
+            <span lang="en">Tell us briefly about your project. We'll show you billDsmart with an example from your day-to-day work and, if you like, set up your first project with you.</span>
+          </p>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="cf-name"><span lang="de">Name</span><span lang="en">Name</span></label>
+              <input type="text" id="cf-name" name="name" autocomplete="name" required>
+              <p class="field-error" id="cf-name-error"></p>
+            </div>
+            <div class="field">
+              <label for="cf-company"><span lang="de">Firma oder Organisation</span><span lang="en">Company or organisation</span></label>
+              <input type="text" id="cf-company" name="company" autocomplete="organization">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="cf-email"><span lang="de">E-Mail</span><span lang="en">Email</span></label>
+              <input type="email" id="cf-email" name="email" autocomplete="email" required>
+              <p class="field-error" id="cf-email-error"></p>
+            </div>
+            <div class="field">
+              <label for="cf-role"><span lang="de">Ich bin</span><span lang="en">I am</span></label>
+              <select id="cf-role" name="role" required>
+                <option value="" data-de="Bitte wählen" data-en="Please choose">Bitte wählen</option>
+                <option value="bauherr-privat" data-de="Private Bauherrschaft" data-en="Private client">Private Bauherrschaft</option>
+                <option value="bauherr-institutionell" data-de="Institutionelle oder öffentliche Bauherrschaft" data-en="Institutional or public client">Institutionelle oder öffentliche Bauherrschaft</option>
+                <option value="gu" data-de="Generalunternehmer" data-en="General contractor">Generalunternehmer</option>
+                <option value="sub" data-de="Subunternehmer oder Handwerksbetrieb" data-en="Subcontractor or trade business">Subunternehmer oder Handwerksbetrieb</option>
+                <option value="partner" data-de="Verband oder Partner" data-en="Association or partner">Verband oder Partner</option>
+              </select>
+              <p class="field-error" id="cf-role-error"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-message"><span lang="de">Ihr Projekt (optional)</span><span lang="en">Your project (optional)</span></label>
+            <textarea id="cf-message" name="message" rows="4"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit"><span lang="de">Demo anfragen</span><span lang="en">Request a demo</span></button>
+          <p class="form-status" id="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-name">billDsmart</span>
+        <p><span lang="de">Sichere Zahlungen am Bau. Für die Schweiz.</span><span lang="en">Secure construction payments. For Switzerland.</span></p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#funktionsweise"><span lang="de">So funktioniert's</span><span lang="en">How it works</span></a></li>
+        <li><a href="#preise"><span lang="de">Preise</span><span lang="en">Pricing</span></a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#kontakt"><span lang="de">Kontakt</span><span lang="en">Contact</span></a></li>
+      </ul>
+      <p class="footer-copy">© <span id="year">2026</span> billDsmart</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
