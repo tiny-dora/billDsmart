@@ -18,7 +18,13 @@
   <!-- Wird angezeigt, wenn niemand angemeldet ist -->
   <div class="app-login" id="app-login" hidden>
     <form class="login-form login-card" id="app-login-form" novalidate>
-      <a href="index.html"><img src="assets/logo.svg" alt="billDsmart" class="login-logo" width="168" height="40"></a>
+      <div class="login-top">
+        <a href="index.html"><img src="assets/logo.svg" alt="billDsmart" class="login-logo" width="168" height="40"></a>
+        <div class="lang-switch" role="group" aria-label="Sprache / Language">
+          <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
+          <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
       <h1 id="al-title">Anmelden</h1>
       <div class="field">
         <label for="al-email" id="al-email-label">E-Mail</label>

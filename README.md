@@ -12,9 +12,9 @@ Live: https://tiny-dora.github.io/billDsmart/
 | Rolle | E-Mail | Passwort |
 |---|---|---|
 | Private Bauherrschaft (Nina Muster) | private.client@gmail.com | 12345678 |
-| Unternehmer (Malerei Beispiel GmbH) | constructor@gmail.com | 87654321 |
+| Unternehmer (Malerei Beispiel GmbH / Example Painting Ltd) | constructor@gmail.com | 87654321 |
 
-Beide sehen **denselben Vertrag** (Malerarbeiten Musterweg 5, Root, CHF 48'000, fünf Meilensteine).
+Beide sehen **denselben Vertrag** (Malerarbeiten Musterweg 5, Uster ZH, CHF 48'000, fünf Meilensteine). Namen, Firmen, Adressen, Dokumente und Beispielbilder wechseln mit der Sprache: auf Englisch z. B. Nina Sample, Example Painting Ltd, Sample Street 5.
 Ablauf zum Durchspielen: Bauherrschaft unterschreibt → zahlt ein (CHF → CHF-Stablecoin im Smart Contract) →
 Unternehmer erledigt Aufgaben und meldet Meilenstein mit Fotos → Bauherrschaft gibt frei (Auszahlung in CHF)
 oder beanstandet → Fachperson aus der Nähe wählen → Schlichtung → Schreiben hochladen → automatische E-Mail ans Notariat → Beglaubigung → Aufteilung.

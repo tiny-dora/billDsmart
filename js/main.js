@@ -113,7 +113,7 @@ const TEXT = {
   },
 };
 
-const chf = (value) => "CHF " + new Intl.NumberFormat("de-CH", { maximumFractionDigits: 0 }).format(Math.round(value));
+const chf = (value) => "CHF " + new Intl.NumberFormat(lang === "en" ? "en-GB" : "de-CH", { maximumFractionDigits: 0 }).format(Math.round(value));
 const fill = (str, vars) => str.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? vars[k] : ""));
 
 let lang = "de";

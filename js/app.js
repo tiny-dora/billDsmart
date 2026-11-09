@@ -7,26 +7,36 @@
    ========================================================== */
 "use strict";
 
-const STORE_KEY = "billDsmart-demo-v1";
+const STORE_KEY = "billDsmart-demo-v2";
 const LANG_KEY = "billDsmart-lang";
 const FEE_RATE = 0.003;
 const DAY = 86400000;
-const PROJECT_LOC = { lat: 47.1149, lon: 8.3897 }; // Root LU
+const PROJECT_LOC = { lat: 47.3471, lon: 8.7209 }; // Uster ZH
 const MAX_FILE = 800 * 1024; // grössere Dateien werden nur mit Namen gespeichert
 
 /* ---------- Personen im Demo-Vertrag (fiktiv) ---------- */
-const PEOPLE = {
+const PEOPLE_RAW = {
   client: {
-    name: "Nina Muster", first: "Nina", org: "", initials: "NM",
-    email: "private.client@gmail.com", address: "Musterweg 5, 6037 Root",
+    name: { de: "Nina Muster", en: "Nina Sample" }, first: "Nina", org: "", initials: { de: "NM", en: "NS" },
+    email: "private.client@gmail.com", address: { de: "Musterweg 5, 8610 Uster", en: "Sample Street 5, 8610 Uster" },
     iban: "CH00 0000 0000 0000 0000 1",
   },
   contractor: {
-    name: "Sandro Beispiel", first: "Sandro", org: "Malerei Beispiel GmbH", initials: "SB",
-    email: "constructor@gmail.com", address: "Werkstrasse 1, 6037 Root",
+    name: { de: "Sandro Beispiel", en: "Sandro Example" }, first: "Sandro", org: { de: "Malerei Beispiel GmbH", en: "Example Painting Ltd" }, initials: { de: "SB", en: "SE" },
+    email: "constructor@gmail.com", address: { de: "Werkstrasse 1, 8610 Uster", en: "Workshop Road 1, 8610 Uster" },
     uid: "CHE-000.000.001", iban: "CH00 0000 0000 0000 0000 2",
   },
 };
+// PEOPLE.client.name usw. liefert automatisch die Fassung der gewählten Sprache
+const PEOPLE = new Proxy({}, {
+  get: (_, role) => {
+    const r = PEOPLE_RAW[role];
+    if (!r) return undefined;
+    const out = {};
+    Object.keys(r).forEach((k) => { out[k] = loc(r[k]); });
+    return out;
+  },
+});
 const other = (role) => (role === "client" ? "contractor" : "client");
 
 /* ---------- Meilensteine des Demo-Vertrags ---------- */
@@ -56,21 +66,24 @@ const TOTAL = MS_SEED.reduce((s, m) => s + m.amount, 0);
 
 /* ---------- Unabhängige Fachpersonen (fiktive Beispielkontakte) ---------- */
 const EXPERTS = [
-  { id: "e1", name: "lic. iur. Petra Amrein", kind: "mediation", city: "Luzern", canton: "LU", lat: 47.0502, lon: 8.3093, langs: "DE" },
-  { id: "e2", name: "Bauschlichtung Zentralschweiz, Urs Gisler", kind: "arbitration", city: "Zug", canton: "ZG", lat: 47.1662, lon: 8.5155, langs: "DE, EN" },
-  { id: "e3", name: "Dr. iur. Martin Odermatt", kind: "law", city: "Schwyz", canton: "SZ", lat: 47.0207, lon: 8.6530, langs: "DE" },
-  { id: "e4", name: "Mediation am See, Claudia Frei", kind: "mediation", city: "Zürich", canton: "ZH", lat: 47.3769, lon: 8.5417, langs: "DE, EN" },
-  { id: "e5", name: "Dr. iur. Reto Baumann, Baurecht", kind: "law", city: "Winterthur", canton: "ZH", lat: 47.4988, lon: 8.7237, langs: "DE" },
-  { id: "e6", name: "lic. iur. Simone Wyss", kind: "arbitration", city: "Aarau", canton: "AG", lat: 47.3925, lon: 8.0442, langs: "DE, FR" },
-  { id: "e7", name: "Bau-Mediation Bern, Thomas Kunz", kind: "mediation", city: "Bern", canton: "BE", lat: 46.9480, lon: 7.4474, langs: "DE, FR" },
-  { id: "e8", name: "Dr. iur. Sarah Meier-Roth", kind: "law", city: "Basel", canton: "BS", lat: 47.5596, lon: 7.5886, langs: "DE, EN" },
-  { id: "e9", name: "Schlichtung Ostschweiz, Daniel Keller", kind: "arbitration", city: "St. Gallen", canton: "SG", lat: 47.4245, lon: 9.3767, langs: "DE" },
-  { id: "e10", name: "Me Isabelle Rochat", kind: "law", city: "Lausanne", canton: "VD", lat: 46.5197, lon: 6.6323, langs: "FR, EN" },
-  { id: "e11", name: "Médiation Léman, Julien Favre", kind: "mediation", city: "Genève", canton: "GE", lat: 46.2044, lon: 6.1432, langs: "FR, EN" },
-  { id: "e12", name: "avv. Luca Bernasconi", kind: "arbitration", city: "Lugano", canton: "TI", lat: 46.0037, lon: 8.9511, langs: "IT, DE" },
-  { id: "e13", name: "Mediation Graubünden, Anna Caduff", kind: "mediation", city: "Chur", canton: "GR", lat: 46.8508, lon: 9.5320, langs: "DE, IT" },
-  { id: "e14", name: "lic. iur. Marc Python", kind: "law", city: "Fribourg", canton: "FR", lat: 46.8065, lon: 7.1620, langs: "FR, DE" },
+  { id: "e1", name: { de: "lic. iur. Petra Amrein", en: "Petra Amrein, LL.M." }, kind: "mediation", city: { de: "Zürich", en: "Zurich" }, canton: "ZH", lat: 47.3769, lon: 8.5417, langs: "DE, EN" },
+  { id: "e2", name: { de: "Bauschlichtung Oberland, Urs Gisler", en: "Oberland Construction Arbitration, Urs Gisler" }, kind: "arbitration", city: { de: "Wetzikon", en: "Wetzikon" }, canton: "ZH", lat: 47.3264, lon: 8.7977, langs: "DE" },
+  { id: "e3", name: { de: "Dr. iur. Reto Baumann, Baurecht", en: "Dr Reto Baumann, construction law" }, kind: "law", city: { de: "Winterthur", en: "Winterthur" }, canton: "ZH", lat: 47.4988, lon: 8.7237, langs: "DE" },
+  { id: "e4", name: { de: "Mediation am See, Claudia Frei", en: "Lakeside Mediation, Claudia Frei" }, kind: "mediation", city: { de: "Rapperswil-Jona", en: "Rapperswil-Jona" }, canton: "SG", lat: 47.2266, lon: 8.8184, langs: "DE, EN" },
+  { id: "e5", name: { de: "Bauschlichtung Zentralschweiz, Marco Odermatt", en: "Central Switzerland Construction Arbitration, Marco Odermatt" }, kind: "arbitration", city: { de: "Zug", en: "Zug" }, canton: "ZG", lat: 47.1662, lon: 8.5155, langs: "DE, EN" },
+  { id: "e6", name: { de: "lic. iur. Simone Wyss", en: "Simone Wyss, LL.M." }, kind: "law", city: { de: "Aarau", en: "Aarau" }, canton: "AG", lat: 47.3925, lon: 8.0442, langs: "DE, FR" },
+  { id: "e7", name: { de: "Mediation Pilatus, Andrea Amstutz", en: "Pilatus Mediation, Andrea Amstutz" }, kind: "mediation", city: { de: "Luzern", en: "Lucerne" }, canton: "LU", lat: 47.0502, lon: 8.3093, langs: "DE" },
+  { id: "e8", name: { de: "Bau-Mediation Bern, Thomas Kunz", en: "Bern Construction Mediation, Thomas Kunz" }, kind: "mediation", city: { de: "Bern", en: "Bern" }, canton: "BE", lat: 46.9480, lon: 7.4474, langs: "DE, FR" },
+  { id: "e9", name: { de: "Dr. iur. Sarah Meier-Roth", en: "Dr Sarah Meier-Roth" }, kind: "law", city: { de: "Basel", en: "Basel" }, canton: "BS", lat: 47.5596, lon: 7.5886, langs: "DE, EN" },
+  { id: "e10", name: { de: "Schlichtung Ostschweiz, Daniel Keller", en: "Eastern Switzerland Arbitration, Daniel Keller" }, kind: "arbitration", city: { de: "St. Gallen", en: "St. Gallen" }, canton: "SG", lat: 47.4245, lon: 9.3767, langs: "DE" },
+  { id: "e11", name: { de: "Mediation Graubünden, Anna Caduff", en: "Graubünden Mediation, Anna Caduff" }, kind: "mediation", city: { de: "Chur", en: "Chur" }, canton: "GR", lat: 46.8508, lon: 9.5320, langs: "DE, IT" },
+  { id: "e12", name: { de: "lic. iur. Marc Python", en: "Marc Python, LL.M." }, kind: "law", city: { de: "Freiburg", en: "Fribourg" }, canton: "FR", lat: 46.8065, lon: 7.1620, langs: "FR, DE" },
+  { id: "e13", name: { de: "avv. Luca Bernasconi", en: "Luca Bernasconi, attorney" }, kind: "arbitration", city: { de: "Lugano", en: "Lugano" }, canton: "TI", lat: 46.0037, lon: 8.9511, langs: "IT, DE" },
+  { id: "e14", name: { de: "Me Isabelle Rochat", en: "Isabelle Rochat, attorney" }, kind: "law", city: { de: "Lausanne", en: "Lausanne" }, canton: "VD", lat: 46.5197, lon: 6.6323, langs: "FR, EN" },
+  { id: "e15", name: { de: "Médiation Léman, Julien Favre", en: "Lake Geneva Mediation, Julien Favre" }, kind: "mediation", city: { de: "Genf", en: "Geneva" }, canton: "GE", lat: 46.2044, lon: 6.1432, langs: "FR, EN" },
 ];
+const expertById = (id) => EXPERTS.find((e) => e.id === id);
+const expertName = (id) => { const e = expertById(id); return e ? loc(e.name) : id; };
 
 /* ==========================================================
    Texte
@@ -176,7 +189,7 @@ const T = {
     dUpload: "Laden Sie das Schreiben mit dem Ergebnis der Schlichtung hoch, zum Beispiel den Brief des Notariats. billDsmart schickt dem Notariat danach automatisch eine E-Mail mit der Bitte, das Schreiben mit seiner Unterschrift zu beglaubigen.",
     agreementFile: "Schreiben mit dem Ergebnis (PDF oder Foto)", useSample: "Beispieldokument der Demo verwenden",
     outcome: "Vereinbartes Ergebnis: Anteil an den Unternehmer", outcomeVal: "{pct} % = CHF {a} an {k}, CHF {b} zurück an {c}",
-    notaryName: "Name des Notariats", notaryEmail: "E-Mail des Notariats",
+    notaryName: "Name des Notariats", notaryDefault: "Notariat Muster, Zürich", notaryEmail: "E-Mail des Notariats",
     uploadSubmit: "Hochladen und Notariat benachrichtigen",
     needFile: "Bitte laden Sie das Schreiben hoch oder verwenden Sie das Beispieldokument.",
     needNotary: "Bitte geben Sie Name und eine gültige E-Mail-Adresse des Notariats an.",
@@ -184,7 +197,7 @@ const T = {
     dRequestedWait: "Sobald die Beglaubigung eintrifft, führt der Smart Contract die vereinbarte Aufteilung aus.",
     simulateNotary: "Beglaubigung durch das Notariat simulieren",
     dResolved: "Erledigt: {notary} hat das Ergebnis am {d} beglaubigt. CHF {a} gingen an {k}, CHF {b} zurück an {c}.",
-    experts: "Unabhängige Fachpersonen", expertsHint: "Beispielkontakte, fiktiv. Sortiert nach Entfernung zur Baustelle in Root.",
+    experts: "Unabhängige Fachpersonen", expertsHint: "Beispielkontakte, fiktiv. Sortiert nach Entfernung zur Baustelle in Uster.",
     allCantons: "Alle Kantone", allKinds: "Alle Fachgebiete",
     kind: { mediation: "Mediation", arbitration: "Bauschlichtung", law: "Baurecht" },
     km: "{km} km", nearby: "In Ihrer Nähe", propose: "Vorschlagen", chosen: "Gewählt",
@@ -337,7 +350,7 @@ const T = {
     dUpload: "Upload the letter with the result of the mediation, for example the notary's letter. billDsmart will then automatically email the notary asking them to certify the letter with their signature.",
     agreementFile: "Letter with the result (PDF or photo)", useSample: "Use the demo sample document",
     outcome: "Agreed result: share for the contractor", outcomeVal: "{pct}% = CHF {a} to {k}, CHF {b} back to {c}",
-    notaryName: "Notary's name", notaryEmail: "Notary's email",
+    notaryName: "Notary's name", notaryDefault: "Sample Notary Office, Zurich", notaryEmail: "Notary's email",
     uploadSubmit: "Upload and notify notary",
     needFile: "Please upload the letter or use the sample document.",
     needNotary: "Please enter the notary's name and a valid email address.",
@@ -345,7 +358,7 @@ const T = {
     dRequestedWait: "As soon as the certification arrives, the smart contract carries out the agreed split.",
     simulateNotary: "Simulate certification by the notary",
     dResolved: "Done: {notary} certified the result on {d}. CHF {a} went to {k}, CHF {b} back to {c}.",
-    experts: "Independent experts", expertsHint: "Sample contacts, fictional. Sorted by distance to the site in Root.",
+    experts: "Independent experts", expertsHint: "Sample contacts, fictional. Sorted by distance to the site in Uster.",
     allCantons: "All cantons", allKinds: "All fields",
     kind: { mediation: "Mediation", arbitration: "Construction arbitration", law: "Construction law" },
     km: "{km} km", nearby: "Near you", propose: "Propose", chosen: "Chosen",
@@ -390,8 +403,8 @@ const T = {
       completed: "All milestones settled. Contract completed.",
       message: "{text}",
     },
-    msg1: "Hello Ms Muster. As discussed, here are the quote and the contract with five milestones. I've already signed.",
-    msg2: "Thank you, Mr Beispiel. I'm uploading the stairwell floor plan and the colour concept here.",
+    msg1: "Hello Ms Sample. As discussed, here are the quote and the contract with five milestones. I've already signed.",
+    msg2: "Thank you, Mr Example. I'm uploading the stairwell floor plan and the colour concept here.",
     msg3: "Is the colour on the façade the one from the colour concept?",
     msg4: "Yes, exactly the colour from the concept. The façade is finished, photos are on the milestone.",
     cm1: "Please also paint the cellar door in the stairwell.", cm2: "Will do, it's included in the price.",
@@ -411,13 +424,15 @@ let ui = { canton: "", kind: "", docFilter: "", deposit: 0 };
 
 const t = () => T[lang];
 const fill = (str, vars = {}) => String(str).replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? vars[k] : ""));
-const num = (n) => new Intl.NumberFormat("de-CH", { maximumFractionDigits: 0 }).format(Math.round(n));
+const num = (n) => new Intl.NumberFormat(lang === "en" ? "en-GB" : "de-CH", { maximumFractionDigits: 0 }).format(Math.round(n));
 const chf = (n) => "CHF " + num(n);
 const locale = () => (lang === "de" ? "de-CH" : "en-GB");
 const fmtDate = (ts) => new Intl.DateTimeFormat(locale(), { day: "numeric", month: "short", year: "numeric" }).format(new Date(ts));
 const fmtDT = (ts) => new Intl.DateTimeFormat(locale(), { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(ts));
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const loc = (v) => (v && typeof v === "object" ? v[lang] || v.de : v);
+const dn = (d) => loc(d.name);   // Dokumentname in der gewählten Sprache
+const dd = (d) => loc(d.data);   // Dateiinhalt (Beispielbilder gibt es in beiden Sprachen)
 const hex = (n) => Array.from({ length: n }, () => "0123456789abcdef"[Math.floor(Math.random() * 16)]).join("");
 const txId = () => "0x" + hex(64);
 const short = (h) => h.slice(0, 8) + "…" + h.slice(-6);
@@ -435,9 +450,10 @@ function distanceKm(a, b) {
 
 /* ---------- Beispielbilder als SVG (keine externen Dateien nötig) ---------- */
 const svgData = (svg) => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-const IMG_COLORS = svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260"><rect width="400" height="260" fill="#fff"/><text x="20" y="34" font-family="Arial" font-size="18" font-weight="700" fill="#1C3258">Farbkonzept Musterweg 5</text><rect x="20" y="60" width="110" height="120" fill="#EFE6D2"/><rect x="145" y="60" width="110" height="120" fill="#8B5A3C"/><rect x="270" y="60" width="110" height="120" fill="#F7F4EE" stroke="#ccc"/><g font-family="Arial" font-size="12" fill="#1C3258"><text x="20" y="200">Fassade</text><text x="20" y="216">NCS S 1005-Y20R</text><text x="145" y="200">Fensterläden</text><text x="145" y="216">NCS S 6030-Y60R</text><text x="270" y="200">Treppenhaus</text><text x="270" y="216">NCS S 0502-Y</text></g></svg>`);
-const IMG_FACADE = svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#CFE0F1"/><rect y="230" width="400" height="70" fill="#9DB27A"/><polygon points="60,110 200,40 340,110" fill="#8B3A2B"/><rect x="70" y="110" width="260" height="140" fill="#EFE6D2"/><g fill="#5C7D9A" stroke="#8B5A3C" stroke-width="5"><rect x="95" y="130" width="40" height="45"/><rect x="180" y="130" width="40" height="45"/><rect x="265" y="130" width="40" height="45"/><rect x="95" y="190" width="40" height="45"/><rect x="265" y="190" width="40" height="45"/></g><rect x="180" y="190" width="40" height="60" fill="#6B4A33"/><text x="12" y="290" font-family="Arial" font-size="13" fill="#fff">Fassade Süd, nach 2. Anstrich</text></svg>`);
-const IMG_SCAFFOLD = svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#D9E4EE"/><rect x="70" y="80" width="260" height="190" fill="#E3DCCB"/><g stroke="#56627A" stroke-width="4"><line x1="60" y1="70" x2="60" y2="280"/><line x1="130" y1="70" x2="130" y2="280"/><line x1="200" y1="70" x2="200" y2="280"/><line x1="270" y1="70" x2="270" y2="280"/><line x1="340" y1="70" x2="340" y2="280"/><line x1="50" y1="140" x2="350" y2="140"/><line x1="50" y1="210" x2="350" y2="210"/></g><rect x="100" y="150" width="40" height="40" fill="#fff" stroke="#D4642D" stroke-width="3"/><rect x="250" y="150" width="40" height="40" fill="#fff" stroke="#D4642D" stroke-width="3"/><text x="12" y="290" font-family="Arial" font-size="13" fill="#1C3258">Gerüst gestellt, Fenster abgedeckt</text></svg>`);
+const imgColors = (l) => svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260"><rect width="400" height="260" fill="#fff"/><text x="20" y="34" font-family="Arial" font-size="18" font-weight="700" fill="#1C3258">${l === "de" ? "Farbkonzept Musterweg 5" : "Colour concept Sample Street 5"}</text><rect x="20" y="60" width="110" height="120" fill="#EFE6D2"/><rect x="145" y="60" width="110" height="120" fill="#8B5A3C"/><rect x="270" y="60" width="110" height="120" fill="#F7F4EE" stroke="#ccc"/><g font-family="Arial" font-size="12" fill="#1C3258"><text x="20" y="200">${l === "de" ? "Fassade" : "Façade"}</text><text x="20" y="216">NCS S 1005-Y20R</text><text x="145" y="200">${l === "de" ? "Fensterläden" : "Shutters"}</text><text x="145" y="216">NCS S 6030-Y60R</text><text x="270" y="200">${l === "de" ? "Treppenhaus" : "Stairwell"}</text><text x="270" y="216">NCS S 0502-Y</text></g></svg>`);
+const imgFacade = (l) => svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#CFE0F1"/><rect y="230" width="400" height="70" fill="#9DB27A"/><polygon points="60,110 200,40 340,110" fill="#8B3A2B"/><rect x="70" y="110" width="260" height="140" fill="#EFE6D2"/><g fill="#5C7D9A" stroke="#8B5A3C" stroke-width="5"><rect x="95" y="130" width="40" height="45"/><rect x="180" y="130" width="40" height="45"/><rect x="265" y="130" width="40" height="45"/><rect x="95" y="190" width="40" height="45"/><rect x="265" y="190" width="40" height="45"/></g><rect x="180" y="190" width="40" height="60" fill="#6B4A33"/><text x="12" y="290" font-family="Arial" font-size="13" fill="#fff">${l === "de" ? "Fassade Süd, nach 2. Anstrich" : "South façade, after second coat"}</text></svg>`);
+const imgScaffold = (l) => svgData(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#D9E4EE"/><rect x="70" y="80" width="260" height="190" fill="#E3DCCB"/><g stroke="#56627A" stroke-width="4"><line x1="60" y1="70" x2="60" y2="280"/><line x1="130" y1="70" x2="130" y2="280"/><line x1="200" y1="70" x2="200" y2="280"/><line x1="270" y1="70" x2="270" y2="280"/><line x1="340" y1="70" x2="340" y2="280"/><line x1="50" y1="140" x2="350" y2="140"/><line x1="50" y1="210" x2="350" y2="210"/></g><rect x="100" y="150" width="40" height="40" fill="#fff" stroke="#D4642D" stroke-width="3"/><rect x="250" y="150" width="40" height="40" fill="#fff" stroke="#D4642D" stroke-width="3"/><text x="12" y="290" font-family="Arial" font-size="13" fill="#1C3258">${l === "de" ? "Gerüst gestellt, Fenster abgedeckt" : "Scaffolding up, windows masked"}</text></svg>`);
+const both = (fn) => ({ de: fn("de"), en: fn("en") });
 
 /* ==========================================================
    Daten: Szenarien
@@ -456,7 +472,7 @@ function buildState(scenario) {
     contract: {
       id: "BDS-2026-0147",
       address: "0x7a3f91c4e2b8d05a6f1e9c3b7d2a48e0f5c6c21e",
-      title: { de: "Malerarbeiten Musterweg 5, Root", en: "Painting works Musterweg 5, Root" },
+      title: { de: "Malerarbeiten Musterweg 5, Uster", en: "Painting works Sample Street 5, Uster" },
       status: "proposed", signedContractorAt: now - 2 * DAY, signedClientAt: null, feeShareClient: 100,
     },
     deposit: null,
@@ -466,11 +482,11 @@ function buildState(scenario) {
       tasks: m.tasks.map((text, j) => ({ id: `${m.id}t${j}`, text, done: false })),
     })),
     docs: [
-      { id: "d1", name: "Offerte_Malerarbeiten_Musterweg5.pdf", type: "invoice", size: 184000, by: "contractor", ts: now - 2 * DAY - 3600000, data: null, comments: [] },
-      { id: "d2", name: "Vertrag_BDS-2026-0147.pdf", type: "contract", size: 96000, by: "contractor", ts: now - 2 * DAY - 3500000, data: null, comments: [] },
-      { id: "d3", name: "Grundriss_Treppenhaus.pdf", type: "plan", size: 412000, by: "client", ts: now - 1 * DAY, data: null, comments: [
+      { id: "d1", name: { de: "Offerte_Malerarbeiten_Musterweg5.pdf", en: "Quote_painting_works_SampleStreet5.pdf" }, type: "invoice", size: 184000, by: "contractor", ts: now - 2 * DAY - 3600000, data: null, comments: [] },
+      { id: "d2", name: { de: "Vertrag_BDS-2026-0147.pdf", en: "Contract_BDS-2026-0147.pdf" }, type: "contract", size: 96000, by: "contractor", ts: now - 2 * DAY - 3500000, data: null, comments: [] },
+      { id: "d3", name: { de: "Grundriss_Treppenhaus.pdf", en: "Floor_plan_stairwell.pdf" }, type: "plan", size: 412000, by: "client", ts: now - 1 * DAY, data: null, comments: [
         { by: "client", key: "cm1", ts: now - 1 * DAY + 600000 }, { by: "contractor", key: "cm2", ts: now - 1 * DAY + 4000000 }] },
-      { id: "d4", name: "Farbkonzept.svg", type: "photo", size: 2400, by: "client", ts: now - 1 * DAY + 60000, data: IMG_COLORS, comments: [] },
+      { id: "d4", name: { de: "Farbkonzept.svg", en: "Colour_concept.svg" }, type: "photo", size: 2400, by: "client", ts: now - 1 * DAY + 60000, data: both(imgColors), comments: [] },
     ],
     messages: [],
     ledger: [],
@@ -497,7 +513,7 @@ function buildState(scenario) {
     // Meilenstein 1 ausbezahlt
     const m1 = state.milestones[0];
     m1.tasks.forEach((x) => (x.done = true));
-    state.docs.push({ id: "d5", name: "Geruest_und_Abdeckung.svg", type: "photo", size: 2600, by: "contractor", ts: now - 14 * DAY, data: IMG_SCAFFOLD, comments: [] });
+    state.docs.push({ id: "d5", name: { de: "Geruest_und_Abdeckung.svg", en: "Scaffolding_and_masking.svg" }, type: "photo", size: 2600, by: "contractor", ts: now - 14 * DAY, data: both(imgScaffold), comments: [] });
     m1.evidence = ["d5"]; m1.status = "paid"; m1.reportedAt = now - 14 * DAY; m1.paidAt = now - 13 * DAY;
     log("reported", { n: 1, ms: "m1" }, now - 14 * DAY);
     log("approved", { n: 1, ms: "m1" }, now - 13 * DAY);
@@ -507,7 +523,7 @@ function buildState(scenario) {
     const m2 = state.milestones[1];
     m2.tasks.forEach((x) => (x.done = true));
     state.messages.push({ id: "c3", from: "client", key: "msg3", ts: now - 6 * DAY });
-    state.docs.push({ id: "d6", name: "Fassade_Sued_fertig.svg", type: "photo", size: 2800, by: "contractor", ts: now - 1 * DAY, data: IMG_FACADE, comments: [] });
+    state.docs.push({ id: "d6", name: { de: "Fassade_Sued_fertig.svg", en: "South_facade_done.svg" }, type: "photo", size: 2800, by: "contractor", ts: now - 1 * DAY, data: both(imgFacade), comments: [] });
     m2.evidence = ["d6"]; m2.status = "reported"; m2.reportedAt = now - 1 * DAY;
     state.messages.push({ id: "c4", from: "contractor", key: "msg4", ts: now - 1 * DAY + 60000, docs: ["d6"] });
     log("reported", { n: 2, ms: "m2" }, now - 1 * DAY);
@@ -587,16 +603,16 @@ const Actions = {
     const d = state.dispute;
     d.expert = expertId; d.proposedBy = role; d.stage = "proposed";
     const ex = EXPERTS.find((e) => e.id === expertId);
-    log("expertProposed", { who: role, expert: ex.name });
-    sys("expertProposed", { who: role, expert: ex.name });
+    log("expertProposed", { who: role, expert: ex.id });
+    sys("expertProposed", { who: role, expert: ex.id });
   },
   acceptExpert() {
     const d = state.dispute, ex = EXPERTS.find((e) => e.id === d.expert);
     const m = msById(d.ms);
     d.stage = "accepted"; d.acceptedAt = Date.now();
-    log("expertAccepted", { expert: ex.name });
-    sys("expertAccepted", { expert: ex.name });
-    state.outbox.push({ id: nextId("o"), ts: Date.now(), kind: "mediator", to: ex.name, toEmail: `kontakt-${ex.id}@example.com`,
+    log("expertAccepted", { expert: ex.id });
+    sys("expertAccepted", { expert: ex.id });
+    state.outbox.push({ id: nextId("o"), ts: Date.now(), kind: "mediator", to: ex.id, toEmail: `kontakt-${ex.id}@example.com`,
       p: { id: state.contract.id, n: msIndex(d.ms) + 1, ms: d.ms, amount: num(m.amount), reason: d.reason } });
   },
   reproposeExpert() { const d = state.dispute; d.stage = "open"; d.expert = null; d.proposedBy = null; },
@@ -613,7 +629,7 @@ const Actions = {
     const m = msById(d.ms), doc = state.docs.find((x) => x.id === docId);
     const a = m.amount * pct / 100;
     state.outbox.push({ id: nextId("o"), ts: Date.now(), kind: "notary", to: notary, toEmail: notaryEmail,
-      p: { id: state.contract.id, n: msIndex(d.ms) + 1, ms: d.ms, file: doc ? doc.name : "", d: Date.now(), pct, a: num(a), b: num(m.amount - a), notary } });
+      p: { id: state.contract.id, n: msIndex(d.ms) + 1, ms: d.ms, file: doc ? doc.id : "", d: Date.now(), pct, a: num(a), b: num(m.amount - a), notary } });
   },
   certify() {
     const d = state.dispute, m = msById(d.ms);
@@ -647,6 +663,7 @@ function evText(e) {
   if (p.who) p.who = partyName(p.who);
   if (p.to) p.to = partyName(p.to);
   if (p.ms) p.name = loc(msById(p.ms).name);
+  if (p.expert) p.expert = expertName(p.expert);
   return fill(x.ev[e.key] || e.key, p);
 }
 
@@ -935,10 +952,10 @@ function vMilestones() {
 }
 
 function thumb(d) {
-  const isImg = d.data && d.data.startsWith("data:image");
-  return `<button type="button" class="thumb" data-action="doc-open" data-doc="${d.id}" title="${esc(d.name)}">
-    ${isImg ? `<img src="${d.data}" alt="">` : `<span class="thumb-icon">${docIcon(d.type)}</span>`}
-    <span class="thumb-name">${esc(d.name)}</span></button>`;
+  const isImg = dd(d) && dd(d).startsWith("data:image");
+  return `<button type="button" class="thumb" data-action="doc-open" data-doc="${d.id}" title="${esc(dn(d))}">
+    ${isImg ? `<img src="${dd(d)}" alt="">` : `<span class="thumb-icon">${docIcon(d.type)}</span>`}
+    <span class="thumb-name">${esc(dn(d))}</span></button>`;
 }
 function docIcon(type) {
   return { plan: "▦", invoice: "CHF", photo: "▣", contract: "§", agreement: "✎", other: "•" }[type] || "•";
@@ -964,7 +981,7 @@ function vChat() {
           <div class="msg-bubble">
             <p class="msg-meta"><strong>${mine ? x.you : esc(p.org || p.name)}</strong> <time>${fmtDT(msg.ts)}</time></p>
             ${text ? `<p>${esc(text)}</p>` : ""}
-            ${atts.length ? `<div class="msg-atts">${atts.map((d) => `<button type="button" class="att" data-action="doc-open" data-doc="${d.id}"><span class="att-icon">${docIcon(d.type)}</span>${esc(d.name)}</button>`).join("")}</div>` : ""}
+            ${atts.length ? `<div class="msg-atts">${atts.map((d) => `<button type="button" class="att" data-action="doc-open" data-doc="${d.id}"><span class="att-icon">${docIcon(d.type)}</span>${esc(dn(d))}</button>`).join("")}</div>` : ""}
           </div>
         </li>`;
       }).join("")}</ol>
@@ -989,7 +1006,7 @@ function vChat() {
       </div>
       <ul class="doc-list">${docs.map((d) => `<li><button type="button" class="doc-item" data-action="doc-open" data-doc="${d.id}">
         <span class="doc-icon doc-icon-${d.type}">${docIcon(d.type)}</span>
-        <span class="doc-text"><strong>${esc(d.name)}</strong><small>${x.docType[d.type]}, ${fill(x.uploadedBy, { who: d.by === role ? x.you : esc(partyName(d.by)), d: fmtDate(d.ts) })}</small></span>
+        <span class="doc-text"><strong>${esc(dn(d))}</strong><small>${x.docType[d.type]}, ${fill(x.uploadedBy, { who: d.by === role ? x.you : esc(partyName(d.by)), d: fmtDate(d.ts) })}</small></span>
         ${d.comments.length ? `<span class="doc-count" title="${x.comments}">${d.comments.length}</span>` : ""}
       </button></li>`).join("")}</ul>
     </section>
@@ -1025,20 +1042,20 @@ function addDocs(docs) {
     docs.forEach((d) => { d.data = null; d.tooBig = true; });
     save();
   }
-  docs.forEach((d) => toast(d.tooBig ? t().docTooBig : fill(t().attachedToast, { name: d.name })));
+  docs.forEach((d) => toast(d.tooBig ? t().docTooBig : fill(t().attachedToast, { name: dn(d) })));
 }
 
 function openDoc(id) {
   const x = t(), d = state.docs.find((k) => k.id === id);
   if (!d) return;
-  const isImg = d.data && d.data.startsWith("data:image");
-  let preview = `<p class="doc-preview-empty">${d.data ? x.docNoPreview : d.tooBig ? x.docTooBig : x.docDemo}</p>`;
-  if (isImg) preview = `<img class="doc-preview-img" src="${d.data}" alt="${esc(d.name)}">`;
+  const isImg = dd(d) && dd(d).startsWith("data:image");
+  let preview = `<p class="doc-preview-empty">${dd(d) ? x.docNoPreview : d.tooBig ? x.docTooBig : x.docDemo}</p>`;
+  if (isImg) preview = `<img class="doc-preview-img" src="${dd(d)}" alt="${esc(dn(d))}">`;
   modal(`
-    <h2>${esc(d.name)}</h2>
+    <h2>${esc(dn(d))}</h2>
     <p class="muted small">${x.docType[d.type]}, ${fill(x.uploadedBy, { who: esc(partyName(d.by)), d: fmtDT(d.ts) })}</p>
     <div class="doc-preview">${preview}</div>
-    ${d.data && !isImg ? `<p><button type="button" class="btn btn-secondary btn-small" data-action="file-open" data-doc="${d.id}">${x.openFile}</button></p>` : ""}
+    ${dd(d) && !isImg ? `<p><button type="button" class="btn btn-secondary btn-small" data-action="file-open" data-doc="${d.id}">${x.openFile}</button></p>` : ""}
     <h3 class="sub-title">${x.comments}</h3>
     <ul class="comments">${d.comments.length ? d.comments.map((c) => `<li><span class="avatar avatar-${c.by}" aria-hidden="true">${PEOPLE[c.by].initials}</span><div><p class="msg-meta"><strong>${c.by === session.role ? x.you : esc(partyName(c.by))}</strong> <time>${fmtDT(c.ts)}</time></p><p>${esc(c.key ? x[c.key] : c.text)}</p></div></li>`).join("") : `<li class="muted">${x.noComments}</li>`}</ul>
     <form class="comment-form" data-form="comment" data-doc="${d.id}">
@@ -1051,15 +1068,15 @@ function openDoc(id) {
 
 function openFile(id) {
   const d = state.docs.find((k) => k.id === id);
-  if (!d || !d.data) return;
-  const [meta, b64] = d.data.split(",");
+  if (!d || !dd(d)) return;
+  const [meta, b64] = dd(d).split(",");
   const mime = (meta.match(/data:([^;]+)/) || [])[1] || "application/octet-stream";
   const bin = atob(b64), arr = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
   const url = URL.createObjectURL(new Blob([arr], { type: mime }));
   const a = document.createElement("a");
   a.href = url; a.target = "_blank"; a.rel = "noopener";
-  if (!/pdf|image/.test(mime)) a.download = d.name;
+  if (!/pdf|image/.test(mime)) a.download = dn(d);
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
@@ -1080,11 +1097,11 @@ function vHelp() {
     let body = "";
     if (d.stage === "open") body = `<p>${x.dOpenNext}</p>`;
     if (d.stage === "proposed") {
-      body = `<p><strong>${fill(x.dProposed, { who: esc(partyName(d.proposedBy)), expert: esc(ex.name), city: ex.city })}</strong></p>`;
+      body = `<p><strong>${fill(x.dProposed, { who: esc(partyName(d.proposedBy)), expert: esc(loc(ex.name)), city: loc(ex.city) })}</strong></p>`;
       body += d.proposedBy === role ? `<p class="muted">${fill(x.dProposedWait, { other: esc(partyName(other(role))) })}</p>`
         : `<div class="row-actions"><button type="button" class="btn btn-primary btn-small" data-action="accept-expert">${x.accept}</button><button type="button" class="btn btn-secondary btn-small" data-action="repropose">${x.proposeOther}</button></div>`;
     }
-    if (d.stage === "accepted") body = `<p>${fill(x.dAccepted, { expert: `<strong>${esc(ex.name)}</strong>` })}</p><button type="button" class="btn btn-primary btn-small" data-action="mediation-done">${x.mediationDone}</button>`;
+    if (d.stage === "accepted") body = `<p>${fill(x.dAccepted, { expert: `<strong>${esc(loc(ex.name))}</strong>` })}</p><button type="button" class="btn btn-primary btn-small" data-action="mediation-done">${x.mediationDone}</button>`;
     if (d.stage === "mediation_done") {
       const a = m.amount * d.pct / 100;
       body = `<p>${x.dUpload}</p>
@@ -1095,7 +1112,7 @@ function vHelp() {
           <input type="range" id="ag-pct" name="pct" min="0" max="100" step="5" value="${d.pct}" data-action="pct">
           <output id="ag-pct-out">${fill(x.outcomeVal, { pct: d.pct, a: num(a), b: num(m.amount - a), k: esc(PEOPLE.contractor.org), c: esc(PEOPLE.client.name) })}</output></div>
         <div class="form-row">
-          <div class="field"><label for="ag-notary">${x.notaryName}</label><input id="ag-notary" name="notary" value="Notariat Muster, Luzern"></div>
+          <div class="field"><label for="ag-notary">${x.notaryName}</label><input id="ag-notary" name="notary" value="${esc(x.notaryDefault)}"></div>
           <div class="field"><label for="ag-notary-email">${x.notaryEmail}</label><input id="ag-notary-email" name="notaryEmail" type="email" value="notariat@example.com"></div>
         </div>
         <p class="field-error" id="ag-error"></p>
@@ -1135,7 +1152,7 @@ function vHelp() {
       </div>
     </div>
     <ul class="experts">${experts.map((e, i) => `<li class="${d && d.expert === e.id ? "is-chosen" : ""}">
-      <div class="expert-main"><strong>${esc(e.name)}</strong><small>${x.kind[e.kind]}, ${e.city} (${e.canton}), ${e.langs}</small></div>
+      <div class="expert-main"><strong>${esc(loc(e.name))}</strong><small>${x.kind[e.kind]}, ${loc(e.city)} (${e.canton}), ${e.langs}</small></div>
       <span class="expert-km">${fill(x.km, { km: Math.round(e.km) })}${i < 3 && !ui.canton && !ui.kind ? `<small>${x.nearby}</small>` : ""}</span>
       ${d && d.expert === e.id ? `<span class="badge badge-paid">${x.chosen}</span>` : canPropose ? `<button type="button" class="btn btn-secondary btn-small" data-action="propose" data-expert="${e.id}">${x.propose}</button>` : ""}
     </li>`).join("")}</ul>
@@ -1143,13 +1160,14 @@ function vHelp() {
   <section class="card">
     <h2 class="card-title">${x.outbox}</h2>
     <p class="muted small">${x.outboxNote}</p>
-    ${state.outbox.length ? `<ul class="outbox">${state.outbox.slice().reverse().map((o) => `<li><button type="button" class="doc-item" data-action="mail-open" data-mail="${o.id}"><span class="doc-icon">@</span><span class="doc-text"><strong>${esc(mailSubject(o))}</strong><small>${x.mailTo}: ${esc(o.to)} &lt;${esc(o.toEmail)}&gt;, ${fmtDT(o.ts)}</small></span></button></li>`).join("")}</ul>` : `<p class="muted">${x.outboxEmpty}</p>`}
+    ${state.outbox.length ? `<ul class="outbox">${state.outbox.slice().reverse().map((o) => `<li><button type="button" class="doc-item" data-action="mail-open" data-mail="${o.id}"><span class="doc-icon">@</span><span class="doc-text"><strong>${esc(mailSubject(o))}</strong><small>${x.mailTo}: ${esc(o.kind === "mediator" ? expertName(o.to) : o.to)} &lt;${esc(o.toEmail)}&gt;, ${fmtDT(o.ts)}</small></span></button></li>`).join("")}</ul>` : `<p class="muted">${x.outboxEmpty}</p>`}
   </section>`;
 }
 
 function mailVars(o) {
   const ms = msById(o.p.ms);
-  return { ...o.p, project: loc(state.contract.title), client: PEOPLE.client.name, contractor: PEOPLE.contractor.org, name: loc(ms.name), d: o.p.d ? fmtDT(o.p.d) : "" };
+  const fileDoc = state.docs.find((k) => k.id === o.p.file);
+  return { ...o.p, file: fileDoc ? dn(fileDoc) : "", project: loc(state.contract.title), client: PEOPLE.client.name, contractor: PEOPLE.contractor.org, name: loc(ms.name), d: o.p.d ? fmtDT(o.p.d) : "" };
 }
 const mailSubject = (o) => fill(o.kind === "notary" ? t().mailNotarySubject : t().mailMediatorSubject, mailVars(o));
 function openMail(id) {
@@ -1157,7 +1175,7 @@ function openMail(id) {
   if (!o) return;
   const body = fill(o.kind === "notary" ? x.mailNotaryBody : x.mailMediatorBody, mailVars(o));
   modal(`<h2>${esc(mailSubject(o))}</h2>
-    <dl class="mail-head"><div><dt>${x.mailTo}</dt><dd>${esc(o.to)} &lt;${esc(o.toEmail)}&gt;</dd></div><div><dt>${x.mailSent}</dt><dd>${fmtDT(o.ts)}</dd></div><div><dt>From</dt><dd>billDsmart &lt;contact@billDsmart.ch&gt;</dd></div></dl>
+    <dl class="mail-head"><div><dt>${x.mailTo}</dt><dd>${esc(o.kind === "mediator" ? expertName(o.to) : o.to)} &lt;${esc(o.toEmail)}&gt;</dd></div><div><dt>${x.mailSent}</dt><dd>${fmtDT(o.ts)}</dd></div><div><dt>From</dt><dd>billDsmart &lt;contact@billDsmart.ch&gt;</dd></div></dl>
     <pre class="mail-body">${esc(body)}</pre>
     <div class="modal-actions"><button type="button" class="btn btn-secondary" data-action="modal-close">${x.close}</button></div>`);
 }
@@ -1168,9 +1186,9 @@ function vPremium() {
   const nextMs = state.milestones.find((k) => k.status !== "paid");
   const rows = [
     { p: loc(state.contract.title), c: PEOPLE.client.name, v: TOTAL, l: m.locked, pd: m.paid, n: nextMs ? loc(nextMs.name) : "–", live: true },
-    { p: "Neubau EFH Seeblick, Meggen", c: "Familie Beispiel", v: 36000, l: 21000, pd: 15000, n: lang === "de" ? "Innenausbau" : "Interior" },
-    { p: "Schulhaus Matte, Sanierung", c: lang === "de" ? "Gemeinde (Beispiel)" : "Municipality (sample)", v: 124000, l: 88000, pd: 36000, n: lang === "de" ? "Turnhalle" : "Gym" },
-    { p: "Büro Bahnhofplatz, Umbau", c: "Muster Immobilien AG", v: 22500, l: 0, pd: 22500, n: "–" },
+    { p: loc({ de: "Neubau EFH Seeblick, Maur", en: "New detached house Lakeview, Maur" }), c: loc({ de: "Familie Beispiel", en: "The Example family" }), v: 36000, l: 21000, pd: 15000, n: loc({ de: "Innenausbau", en: "Interior finishing" }) },
+    { p: loc({ de: "Schulhaus Matte, Sanierung, Dübendorf", en: "Matte school renovation, Dübendorf" }), c: loc({ de: "Schulgemeinde (Beispiel)", en: "School district (sample)" }), v: 124000, l: 88000, pd: 36000, n: loc({ de: "Turnhalle", en: "Gym" }) },
+    { p: loc({ de: "Büro Bahnhofplatz, Umbau, Uster", en: "Station Square office refit, Uster" }), c: loc({ de: "Muster Immobilien AG", en: "Sample Real Estate Ltd" }), v: 22500, l: 0, pd: 22500, n: "–" },
   ];
   const months = lang === "de" ? ["Jun", "Jul", "Aug", "Sep", "Okt", "Nov"] : ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
   const vals = [12000, 18500, 9000, 26000, 21500, m.paid];
@@ -1310,7 +1328,7 @@ document.addEventListener("click", (e) => {
     case "mail-open": openMail(el.dataset.mail); break;
     case "propose": {
       const ex = EXPERTS.find((k) => k.id === el.dataset.expert);
-      Actions.propose(ex.id, role); commit(fill(x.proposedToast, { expert: ex.name, other: partyName(other(role)) })); break;
+      Actions.propose(ex.id, role); commit(fill(x.proposedToast, { expert: loc(ex.name), other: partyName(other(role)) })); break;
     }
     case "accept-expert": Actions.acceptExpert(); commit(x.acceptedToast); break;
     case "repropose": Actions.reproposeExpert(); commit(); break;
@@ -1394,7 +1412,7 @@ document.addEventListener("submit", async (e) => {
       if (!notary || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(notaryEmail)) { err.textContent = x.needNotary; return; }
       let doc;
       if (file) [doc] = await readFiles([file], "agreement");
-      else doc = { id: nextId("d"), name: lang === "de" ? "Schlichtungsvereinbarung_Meilenstein.pdf" : "Mediation_agreement_milestone.pdf", type: "agreement", size: 120000, by: role, ts: Date.now(), data: null, comments: [] };
+      else doc = { id: nextId("d"), name: { de: "Schlichtungsvereinbarung_Meilenstein.pdf", en: "Mediation_agreement_milestone.pdf" }, type: "agreement", size: 120000, by: role, ts: Date.now(), data: null, comments: [] };
       addDocs([doc]);
       Actions.uploadAgreement(role, doc.id, Number(fd.get("pct")), notary, notaryEmail);
       commit(x.notaryToast); break;
@@ -1433,6 +1451,8 @@ function showLogin(prefill) {
   $("#app").hidden = true;
   $("#app-login").hidden = false;
   document.documentElement.lang = lang;
+  document.querySelectorAll("[data-set-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.setLang === lang)));
+  document.title = x.title;
   $("#al-title").textContent = x.signIn;
   $("#al-email-label").textContent = x.email;
   $("#al-pw-label").textContent = x.password;

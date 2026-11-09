@@ -9,6 +9,7 @@
 .app-login { min-height: 100vh; display: grid; place-items: center; padding: 24px; border-top: 4px solid var(--orange); }
 .login-card { width: min(440px, 100%); border-radius: var(--radius-m); box-shadow: 0 30px 60px -30px rgba(28,50,88,.45); }
 .login-card h1 { font-size: 1.5rem; margin-bottom: 18px; }
+.login-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .al-back { margin: 18px 0 0; font-size: .9375rem; }
 
 /* Demo-Leiste */
