@@ -13,7 +13,7 @@ const CONFIG = {
   // Formspree-Endpunkt (z. B. "https://formspree.io/f/abcdwxyz").
   // Leer lassen: Das Formular öffnet dann das E-Mail-Programm.
   FORM_ENDPOINT: "",
-  CONTACT_EMAIL: "kontakt@billdsmart.ch",
+  CONTACT_EMAIL: "contact@billDsmart.ch",
   FEE_RATE: 0.003, // 0,3 %
 };
 
@@ -120,14 +120,14 @@ function setLang(next) {
   document.querySelectorAll("option[data-de]").forEach((opt) => {
     opt.textContent = opt.dataset[lang];
   });
-  try { localStorage.setItem("billdsmart-lang", lang); } catch (e) { /* Speicher nicht verfügbar */ }
+  try { localStorage.setItem("billDsmart-lang", lang); } catch (e) { /* Speicher nicht verfügbar */ }
   renderDemo();
   updateCalc();
 }
 
 function initLang() {
   let stored = null;
-  try { stored = localStorage.getItem("billdsmart-lang"); } catch (e) { /* ignorieren */ }
+  try { stored = localStorage.getItem("billDsmart-lang"); } catch (e) { /* ignorieren */ }
   document.querySelectorAll("[data-set-lang]").forEach((btn) => {
     btn.addEventListener("click", () => setLang(btn.dataset.setLang));
   });

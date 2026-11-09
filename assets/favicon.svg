@@ -1,9 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="6" fill="#1F2528"/>
-  <path d="M7 26V15M16 26V7M25 26V15" stroke="#E9EAE6" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M7 15L16 7L25 15" stroke="#E9EAE6" stroke-width="2.2" stroke-linejoin="round"/>
-  <path d="M4 26H28" stroke="#E9EAE6" stroke-width="2.2" stroke-linecap="round"/>
-  <circle cx="7" cy="15" r="2.6" fill="#F2C230"/>
-  <circle cx="16" cy="7" r="2.6" fill="#F2C230"/>
-  <circle cx="25" cy="15" r="2.6" fill="#F2C230"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="712 100 576 576">
+<g fill="#1C3258">
+  <path d="M778 170H852V235H778Z"/>
+  <rect x="836" y="170" width="16" height="477"/>
+  <rect x="895" y="170" width="16" height="300"/>
+  <path d="M815 627H900V647H815Z"/>
+  <polyline points="852,172 895,221 852,287 895,356 852,422 895,488 852,552 895,618" fill="none" stroke="#1C3258" stroke-width="11" stroke-linejoin="miter"/>
+  <path d="M895 285H1019A181 181 0 0 1 1019 647H895Z"/>
+  <path d="M1056 170H1125V194H1056Z"/>
+  <path d="M1078 194H1098L1104 214H1067Z"/>
+  <path d="M1076 206L990 290" stroke="#1C3258" stroke-width="12" stroke-linecap="round"/>
+  <path d="M1096 206L1149 334" stroke="#1C3258" stroke-width="11" stroke-linecap="round"/></g>
+<g fill="#D4642D"><path d="M783 128H1232V170H783Z"/><path d="M972 476L1012 516L1096 412" fill="none" stroke="#D4642D" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/></g>
 </svg>
