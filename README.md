@@ -5,6 +5,15 @@ Inhalte basieren auf dem Business Model Canvas, Farben und Schrift auf dem billD
 
 Live: https://tiny-dora.github.io/billDsmart/
 
+## Report (Seminar Paper)
+
+Der Report für das Seminar «FinTech and InsurTech» (LaTeX) liegt in einem eigenen, privaten Repository:
+[tiny-dora/billDsmart-report](https://github.com/tiny-dora/billDsmart-report)
+
+Das Repository ist mit dem Overleaf-Projekt verbunden. Änderungen aus Overleaf kommen nicht automatisch,
+sondern über Overleaf → Integrations → GitHub → «Push Overleaf changes to GitHub» ins Repository.
+Zugriff haben nur eingeladene Personen (Settings → Collaborators im Report-Repository).
+
 ## Plattform-Demo (Login)
 
 Über «Anmelden» auf der Website oder direkt unter `app.html`:
